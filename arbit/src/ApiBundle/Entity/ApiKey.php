@@ -38,6 +38,13 @@ class ApiKey
     /**
      * @var string
      *
+     * @ORM\Column(name="secretkey", type="string", nullable=true)
+     */
+    private $secretkey;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="wallet", type="string", nullable=true)
      */
     private $wallet;
@@ -123,5 +130,29 @@ class ApiKey
     public function getWallet()
     {
         return $this->wallet;
+    }
+
+    /**
+     * Set secretkey
+     *
+     * @param string $secretkey
+     *
+     * @return ApiKey
+     */
+    public function setSecretkey($secretkey)
+    {
+        $this->secretkey = $secretkey;
+
+        return $this;
+    }
+
+    /**
+     * Get secretkey
+     *
+     * @return string
+     */
+    public function getSecretkey()
+    {
+        return $this->secretkey;
     }
 }
