@@ -5,7 +5,10 @@ namespace ApiBundle\Controller;
 use ApiBundle\Entity\ApiKey;
 use ccxt\bitfinex;
 use ccxt\bitfinex2;
+use ccxt\bitmex;
+use ccxt\exmo;
 use ccxt\huobi;
+use ccxt\livecoin;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -83,9 +86,9 @@ class ApiEndPointController extends Controller
     {
         date_default_timezone_set("UTC");
 
-        $bitfinex = new bitfinex2();
-        $bitfinex->load_markets();
-        $markets = $bitfinex->market("BTC/USD");
+        $bitmex = new livecoin();
+        $bitmex->load_markets();
+        $markets = $bitmex->market("BTC/USD");
 
         return new JsonResponse($markets);
 
