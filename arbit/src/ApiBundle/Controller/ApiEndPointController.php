@@ -3,6 +3,9 @@
 namespace ApiBundle\Controller;
 
 use ApiBundle\Entity\ApiKey;
+use ccxt\bitfinex;
+use ccxt\bitfinex2;
+use ccxt\huobi;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -67,5 +70,24 @@ class ApiEndPointController extends Controller
             "secret key hash" => md5($records->getSecretkey()),
         );
         return new JsonResponse($record_array);
+    }
+
+    /**
+     * @Route("test")
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function test(Request $request)
+    {
+        date_default_timezone_set("UTC");
+
+        $bitfinex = new bitfinex2();
+        $bitfinex->load_markets();
+        $markets = $bitfinex->market("BTC/USD");
+
+        return new JsonResponse($markets);
+
     }
 }
