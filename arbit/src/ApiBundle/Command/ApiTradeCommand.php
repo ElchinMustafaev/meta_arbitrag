@@ -88,22 +88,20 @@ class ApiTradeCommand extends ContainerAwareCommand
             $livecoin_ask = $markets['info']['best_ask'];
 
             $result = array(
-                "pare" => $first_record->getExchange(),
-                "first wallet" => $first_wallet,
-                "second_wallet" => $second_wallet,
+                "pair" => $first_record->getExchange(),
+                "first exchange" => $first_wallet,
+                "second exchange" => $second_wallet,
                 "livecoin bid" => $livecoin_bid,
                 "livecoin ask" => $livecoin_ask,
                 "bitmex bid" => $bitmex_bid,
                 "bitmex ask" => $bitmex_ask,
-                "bid" => $livecoin_bid - $bitmex_bid,
-                "ask" => $livecoin_ask - $bitmex_ask,
-                "bid  spread" => ($livecoin_bid / $bitmex_bid - 1) * 100,
+                "bid difference" => $livecoin_bid - $bitmex_bid,
+                "ask difference" => $livecoin_ask - $bitmex_ask,
+                "bid spread" => ($livecoin_bid / $bitmex_bid - 1) * 100,
                 "ask spread" => ($livecoin_ask / $bitmex_ask -1) * 100,
             );
 
             print_r($result);
-
-
 
         } catch (\Exception $e) {
             $output->writeln($e->getMessage());
