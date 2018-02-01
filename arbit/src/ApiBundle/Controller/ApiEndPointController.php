@@ -27,17 +27,17 @@ class ApiEndPointController extends Controller
        $json_data = $request->getContent();
        $data = json_decode($json_data,1);
 
-        $exchange = $data["exchange"];
+        $pair = $data["pair"];
         $api_key = $data["api_key"];
-        $wallet = $data["wallet"];
+        $exchange = $data["exchange"];
         $secretkey = $data["secretkey"];
 
         $em = $this->getDoctrine()->getManager();
         $new_record = new ApiKey();
 
-        $new_record->setExchange($exchange);
+        $new_record->setPair($pair);
         $new_record->setKey($api_key);
-        $new_record->setWallet($wallet);
+        $new_record->setExchange($exchange);
         $new_record->setSecretkey($secretkey);
 
         $em->persist($new_record);
@@ -67,9 +67,9 @@ class ApiEndPointController extends Controller
             );
         $record_array = array(
             "id" => $records->getId(),
-            "exchange" => $records->getExchange(),
+            "pair" => $records->getPair(),
             "api_key" => $records->getKey(),
-            "wallet" => $records->getWallet(),
+            "exchange" => $records->getExchange(),
             "secret key hash" => md5($records->getSecretkey()),
         );
         return new JsonResponse($record_array);

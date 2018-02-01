@@ -45,9 +45,9 @@ class ApiKey
     /**
      * @var string
      *
-     * @ORM\Column(name="wallet", type="string", nullable=true)
+     * @ORM\Column(name="pair", type="string", nullable=true)
      */
-    private $wallet;
+    private $pair;
 
 
     /**
@@ -59,6 +59,9 @@ class ApiKey
     {
         return $this->id;
     }
+
+    
+
 
     /**
      * Set exchange
@@ -109,30 +112,6 @@ class ApiKey
     }
 
     /**
-     * Set wallet
-     *
-     * @param string $wallet
-     *
-     * @return ApiKey
-     */
-    public function setWallet($wallet)
-    {
-        $this->wallet = $wallet;
-
-        return $this;
-    }
-
-    /**
-     * Get wallet
-     *
-     * @return string
-     */
-    public function getWallet()
-    {
-        return $this->wallet;
-    }
-
-    /**
      * Set secretkey
      *
      * @param string $secretkey
@@ -154,5 +133,29 @@ class ApiKey
     public function getSecretkey()
     {
         return $this->secretkey;
+    }
+
+    /**
+     * Set pair
+     *
+     * @param string $pair
+     *
+     * @return ApiKey
+     */
+    public function setPair($pair)
+    {
+        $this->pair = $pair;
+
+        return $this;
+    }
+
+    /**
+     * Get pair
+     *
+     * @return string
+     */
+    public function getPair()
+    {
+        return $this->pair;
     }
 }

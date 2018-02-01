@@ -38,9 +38,16 @@ class ApiKey
     /**
      * @var string
      *
-     * @ORM\Column(name="wallet", type="string", nullable=true)
+     * @ORM\Column(name="secretkey", type="string", nullable=true)
      */
-    private $wallet;
+    private $secretkey;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pair", type="string", nullable=true)
+     */
+    private $pair;
 
 
     /**
@@ -52,5 +59,7 @@ class ApiKey
     {
         return $this->id;
     }
-}
 
+    
+
+}

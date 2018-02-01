@@ -19,8 +19,8 @@ class ApiTradeCommand extends ContainerAwareCommand
         $this
             ->setName('api:trade')
             ->setDescription('check cost and start trade')
-            ->addOption('wallet1', null, InputOption::VALUE_REQUIRED, 'first wallet')
-            ->addOption("wallet2", null, InputOption::VALUE_REQUIRED, "second wallet")
+            ->addOption('exchange1', null, InputOption::VALUE_REQUIRED, 'first wallet')
+            ->addOption("exchange2", null, InputOption::VALUE_REQUIRED, "second wallet")
          //   ->addOption("percent", null, InputOption::VALUE_REQUIRED, "percent rate")
         ;
     }
@@ -29,8 +29,8 @@ class ApiTradeCommand extends ContainerAwareCommand
     {
         date_default_timezone_set("UTC");
 
-        $first_wallet = $input->getOption("wallet1");
-        $second_wallet = $input->getOption("wallet2");
+        $first_exchange = $input->getOption("exchange1");
+        $second_exchange = $input->getOption("exchange2");
         //$percent_rate = $input->getOption("percent");
 
         try {
@@ -39,7 +39,7 @@ class ApiTradeCommand extends ContainerAwareCommand
                 ->getManager()
                 ->getRepository('ApiBundle:ApiKey')
                 ->findOneBy(array(
-                    "wallet" => $first_wallet,
+                    "exchange" => $first_exchange,
                     )
                 );
 
@@ -48,7 +48,7 @@ class ApiTradeCommand extends ContainerAwareCommand
                 ->getManager()
                 ->getRepository('ApiBundle:ApiKey')
                 ->findOneBy(array(
-                        "wallet" => $second_wallet,
+                        "exchange" => $second_exchange,
                     )
                 );
 
@@ -69,7 +69,7 @@ class ApiTradeCommand extends ContainerAwareCommand
             //print_r($bitmex->fetch_balance()); работает
 
             $bitmex->load_markets();
-            $markets = $bitmex->market($second_record->getExchange());
+            $markets = $bitmex->market($second_record->getPair());
             //$bitmex_orders = $bitmex->fetch_order_book($bitmex->symbols[0]);
             $bitmex_bid = $markets['info']['bidPrice'];
             $bitmex_ask = $markets['info']['askPrice'];
@@ -81,22 +81,22 @@ class ApiTradeCommand extends ContainerAwareCommand
 
             //print_r($livecoin->fetch_balance()); работает
             $livecoin->load_markets(true);
-            $markets = $livecoin->market($first_record->getExchange());
+            $markets = $livecoin->market($first_record->getPair());
             //$bitfinex_orders = $bitfinex->fetch_order_book($bitfinex->symbols[0]);
 
             $livecoin_bid = $markets["info"]['best_bid'];
             $livecoin_ask = $markets['info']['best_ask'];
 
             $result = array(
-                "pare" => $first_record->getExchange(),
-                "first wallet" => $first_wallet,
-                "second_wallet" => $second_wallet,
+                "pair" => $first_record->getPair(),
+                "first exchange" => $first_exchange,
+                "second exchange" => $second_exchange,
                 "livecoin bid" => $livecoin_bid,
                 "livecoin ask" => $livecoin_ask,
                 "bitmex bid" => $bitmex_bid,
                 "bitmex ask" => $bitmex_ask,
-                "bid" => $livecoin_bid - $bitmex_bid,
-                "ask" => $livecoin_ask - $bitmex_ask,
+                "bid diff" => $livecoin_bid - $bitmex_bid,
+                "ask diff" => $livecoin_ask - $bitmex_ask,
                 "bid  spread" => ($livecoin_bid / $bitmex_bid - 1) * 100,
                 "ask spread" => ($livecoin_ask / $bitmex_ask -1) * 100,
             );
