@@ -2,3 +2,10 @@ services:
 #    api.example:
 #        class: ApiBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
+    api.livecoin:
+        class: ApiBundle\Service\Livecoin
+        arguments: ["@service_container", "@doctrine.orm.entity_manager"]
+
+    api.bitmex:
+            class: ApiBundle\Service\Bitmex
+            arguments: ["@service_container", "@doctrine.orm.entity_manager"]

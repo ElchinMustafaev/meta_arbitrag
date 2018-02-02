@@ -45,9 +45,9 @@ class ApiKey
     /**
      * @var string
      *
-     * @ORM\Column(name="pair", type="string", nullable=true)
+     * @ORM\Column(name="users", type="string", nullable=true)
      */
-    private $pair;
+    private $users;
 
 
     /**
@@ -157,5 +157,29 @@ class ApiKey
     public function getPair()
     {
         return $this->pair;
+    }
+
+    /**
+     * Set users
+     *
+     * @param string $users
+     *
+     * @return ApiKey
+     */
+    public function setUsers($users)
+    {
+        $this->users = $users;
+
+        return $this;
+    }
+
+    /**
+     * Get users
+     *
+     * @return string
+     */
+    public function getUsers()
+    {
+        return $this->users;
     }
 }

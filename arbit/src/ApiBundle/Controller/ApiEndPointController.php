@@ -27,7 +27,7 @@ class ApiEndPointController extends Controller
        $json_data = $request->getContent();
        $data = json_decode($json_data,1);
 
-        $pair = $data["pair"];
+        $user_name = $data["user_name"];
         $api_key = $data["api_key"];
         $exchange = $data["exchange"];
         $secretkey = $data["secretkey"];
@@ -35,7 +35,7 @@ class ApiEndPointController extends Controller
         $em = $this->getDoctrine()->getManager();
         $new_record = new ApiKey();
 
-        $new_record->setPair($pair);
+        $new_record->setUsers($user_name);
         $new_record->setKey($api_key);
         $new_record->setExchange($exchange);
         $new_record->setSecretkey($secretkey);

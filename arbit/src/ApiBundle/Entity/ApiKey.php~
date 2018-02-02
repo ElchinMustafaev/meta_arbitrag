@@ -45,9 +45,9 @@ class ApiKey
     /**
      * @var string
      *
-     * @ORM\Column(name="pair", type="string", nullable=true)
+     * @ORM\Column(name="users", type="string", nullable=true)
      */
-    private $pair;
+    private $users;
 
 
     /**
@@ -62,4 +62,100 @@ class ApiKey
 
     
 
+
+    /**
+     * Set exchange
+     *
+     * @param string $exchange
+     *
+     * @return ApiKey
+     */
+    public function setExchange($exchange)
+    {
+        $this->exchange = $exchange;
+
+        return $this;
+    }
+
+    /**
+     * Get exchange
+     *
+     * @return string
+     */
+    public function getExchange()
+    {
+        return $this->exchange;
+    }
+
+    /**
+     * Set key
+     *
+     * @param string $key
+     *
+     * @return ApiKey
+     */
+    public function setKey($key)
+    {
+        $this->key = $key;
+
+        return $this;
+    }
+
+    /**
+     * Get key
+     *
+     * @return string
+     */
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    /**
+     * Set secretkey
+     *
+     * @param string $secretkey
+     *
+     * @return ApiKey
+     */
+    public function setSecretkey($secretkey)
+    {
+        $this->secretkey = $secretkey;
+
+        return $this;
+    }
+
+    /**
+     * Get secretkey
+     *
+     * @return string
+     */
+    public function getSecretkey()
+    {
+        return $this->secretkey;
+    }
+
+    /**
+     * Set pair
+     *
+     * @param string $pair
+     *
+     * @return ApiKey
+     */
+    public function setPair($pair)
+    {
+        $this->pair = $pair;
+
+        return $this;
+    }
+
+    /**
+     * Get pair
+     *
+     * @return string
+     */
+    public function getPair()
+    {
+        return $this->pair;
+    }
 }
