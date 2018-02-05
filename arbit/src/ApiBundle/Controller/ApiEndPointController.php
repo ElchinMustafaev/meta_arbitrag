@@ -83,12 +83,38 @@ class ApiEndPointController extends Controller
             date_default_timezone_set("UTC");
 
             $binance = new binance();
-            $binance->load_markets();
-            $markets = $binance->market("ETH/BTC");
+            $binance->load_markets(true);
+            //$market_id = $binance->market_id("ETH/BTC");
 
-            return new JsonResponse($markets);
+            $orders = $binance->fetch_order_book("ETH/BTC");
+
+            $i = $j = 0;
+            $bids = $asks = 0;
+            foreach ($orders["bids"] as $key => $value) {
+                $i++;
+                $bids += $value[0];
+            }
+            $aver_bid = $bids / $i;
+
+            foreach ($orders["asks"] as $key => $value) {
+                $j++;
+                $asks += $value[0];
+            }
+            $aver_ask = $asks / $j;
+
+            return new JsonResponse(array(
+                "bid" => $aver_bid,
+                "ask" => $aver_ask,
+                )
+            );
         } catch (\Exception $e) {
-            return new JsonResponse($e->getMessage());
+            $err = array(
+                $e->getMessage(),
+                $e->getFile(),
+                $e->getLine(),
+            );
+            return new JsonResponse($err);
+
         }
     }
 }
