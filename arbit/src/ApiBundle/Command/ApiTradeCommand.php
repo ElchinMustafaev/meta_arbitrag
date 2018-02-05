@@ -40,6 +40,7 @@ class ApiTradeCommand extends ContainerAwareCommand
             "livecoin" => $this->getContainer()->get("api.livecoin"),
             "bitmex" => $this->getContainer()->get("api.bitmex"),
             "binance" => $this->getContainer()->get("api.binance"),
+            "cryptopia" => $this->getContainer()->get("api.cryptopia"),
         );
 
         try {

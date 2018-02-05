@@ -13,3 +13,7 @@ services:
     api.binance:
         class: ApiBundle\Service\Binance
         arguments: ["@service_container", "@doctrine.orm.entity_manager"]
+
+    api.cryptopia:
+        class: ApiBundle\Service\Cryptopia
+        arguments: ["@service_container", "@doctrine.orm.entity_manager"]
