@@ -34,29 +34,36 @@ class Livecoin
         $pair
     )
     {
-        $db_record = $this
-            ->em
-            ->getRepository('ApiBundle:ApiKey')
-            ->findOneBy(array(
-                    "exchange" => "livecoin",
-                    "users" => $name,
-                )
+        try {
+            $db_record = $this
+                ->em
+                ->getRepository('ApiBundle:ApiKey')
+                ->findOneBy(array(
+                        "exchange" => "livecoin",
+                        "users" => $name,
+                    )
+                );
+
+            $livecoin = new \ccxt\livecoin();
+            $livecoin->apiKey = $db_record->getKey();
+            $livecoin->secret = $db_record->getSecretKey();
+
+            $livecoin->load_markets(true);
+            $markets = $livecoin->market($pair);
+
+            $livecoin_bid = $markets["info"]['best_bid'];
+            $livecoin_ask = $markets['info']['best_ask'];
+
+            return array(
+                "bid" => $livecoin_bid,
+                "ask" => $livecoin_ask,
             );
-
-        $livecoin = new \ccxt\livecoin();
-        $livecoin->apiKey = $db_record->getKey();
-        $livecoin->secret = $db_record->getSecretKey();
-
-        $livecoin->load_markets(true);
-        $markets = $livecoin->market($pair);
-
-        $livecoin_bid = $markets["info"]['best_bid'];
-        $livecoin_ask = $markets['info']['best_ask'];
-
-        return array(
-            "bid" => $livecoin_bid,
-            "ask" => $livecoin_ask,
-        );
+        } catch (\Exception $e) {
+            return array(
+                "bid" => $e->getMessage(),
+                "ask" => $e->getMessage(),
+            );
+        }
 
     }
 }

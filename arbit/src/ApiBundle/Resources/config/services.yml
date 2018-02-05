@@ -7,5 +7,9 @@ services:
         arguments: ["@service_container", "@doctrine.orm.entity_manager"]
 
     api.bitmex:
-            class: ApiBundle\Service\Bitmex
-            arguments: ["@service_container", "@doctrine.orm.entity_manager"]
+        class: ApiBundle\Service\Bitmex
+        arguments: ["@service_container", "@doctrine.orm.entity_manager"]
+
+    api.binance:
+        class: ApiBundle\Service\Binance
+        arguments: ["@service_container", "@doctrine.orm.entity_manager"]

@@ -39,6 +39,7 @@ class ApiTradeCommand extends ContainerAwareCommand
         $exchanges_array = array(
             "livecoin" => $this->getContainer()->get("api.livecoin"),
             "bitmex" => $this->getContainer()->get("api.bitmex"),
+            "binance" => $this->getContainer()->get("api.binance"),
         );
 
         try {
@@ -46,21 +47,33 @@ class ApiTradeCommand extends ContainerAwareCommand
 
             $first_result = $exchanges_array[$first_exchange]->mainFunction($user_name, $pair);
             $second_result = $exchanges_array[$second_exchange]->mainFunction($user_name, $pair);
-            
+
             $result = array(
                 "pair" => $pair,
                 "first exchange" => $first_exchange,
                 "second exchange" => $second_exchange,
-                $first_exchange . " bid" => $first_result["bid"],
-                $first_exchange . " ask" => $first_result["ask"],
-                $second_exchange . " bid" => $second_result["bid"],
-                $second_exchange . " ask" => $second_result["ask"],
-                "bid diff" => $first_result["bid"] - $second_result["bid"],
-                "ask diff" => $first_result["ask"] - $second_result["ask"],
-                "bid  spread" => ($first_result["bid"] / $second_result["bid"] - 1) * 100,
-                "ask spread" => ($first_result["ask"] / $second_result["ask"] -1) * 100,
+
             );
 
+            if (is_numeric($first_result["bid"]) && is_numeric($second_result["bid"])) {
+                $spreads = array(
+                    $first_exchange . " bid" => $first_result["bid"],
+                    $first_exchange . " ask" => $first_result["ask"],
+                    $second_exchange . " bid" => $second_result["bid"],
+                    $second_exchange . " ask" => $second_result["ask"],
+                    "bid diff" => $first_result["bid"] - $second_result["bid"],
+                    "ask diff" => $first_result["ask"] - $second_result["ask"],
+                    "bid  spread" => ($first_result["bid"] / $second_result["bid"] - 1) * 100,
+                    "ask spread" => ($first_result["ask"] / $second_result["ask"] -1) * 100,
+                );
+                $result = array_merge($result, $spreads);
+            } else {
+                $err = array(
+                    $first_exchange => $first_result["bid"],
+                    $second_exchange => $second_result["bid"],
+                );
+                $result = array_merge($result, $err);
+            }
             print_r($result);
 
 

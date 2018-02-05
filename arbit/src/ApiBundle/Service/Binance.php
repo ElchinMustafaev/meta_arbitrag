@@ -2,17 +2,16 @@
 /**
  * Created by PhpStorm.
  * User: el
- * Date: 02.02.2018
- * Time: 16:05
+ * Date: 03.02.2018
+ * Time: 22:47
  */
 
 namespace ApiBundle\Service;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 
-class Bitmex
+class Binance
 {
-
     private $contailer;
 
     private $em;
@@ -29,7 +28,6 @@ class Bitmex
         $this->em = $em;
     }
 
-
     public function mainFunction(
         $name,
         $pair
@@ -40,24 +38,24 @@ class Bitmex
                 ->em
                 ->getRepository('ApiBundle:ApiKey')
                 ->findOneBy(array(
-                        "exchange" => "bitmex",
+                        "exchange" => "binance",
                         "users" => $name,
                     )
                 );
 
-            $bitmex = new \ccxt\bitmex();
-            $bitmex->apiKey = $db_record->getKey();
-            $bitmex->secret = $db_record->getSecretKey();
+            $binance = new \ccxt\binance();
+            $binance->apiKey = $db_record->getKey();
+            $binance->secret = $db_record->getSecretKey();
 
-            $bitmex->load_markets(true);
-            $markets = $bitmex->market($pair);
+            $binance->load_markets(true);
+            $markets = $binance->market($pair);
 
-            $bitmex_bid = $markets["info"]['bidPrice'];
-            $bitmex_ask = $markets['info']['askPrice'];
+            $binance_bid = $markets["info"]['bidPrice'];
+            $binance_ask = $markets['info']['askPrice'];
 
             return array(
-                "bid" => $bitmex_bid,
-                "ask" => $bitmex_ask,
+                "bid" => $binance_bid,
+                "ask" => $binance_ask,
             );
         } catch (\Exception $e) {
             return array(
@@ -65,7 +63,6 @@ class Bitmex
                 "ask" => $e->getMessage(),
             );
         }
-
     }
 
 }
