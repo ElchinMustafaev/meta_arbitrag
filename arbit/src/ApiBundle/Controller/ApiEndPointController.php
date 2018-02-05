@@ -6,6 +6,12 @@ use ApiBundle\Entity\ApiKey;
 use ccxt\binance;
 use ccxt\bittrex;
 use ccxt\cryptopia;
+use ccxt\gdax;
+use ccxt\hitbtc2;
+use ccxt\huobi;
+use ccxt\huobipro;
+use ccxt\kraken;
+use ccxt\poloniex;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -84,9 +90,10 @@ class ApiEndPointController extends Controller
         try {
             date_default_timezone_set("UTC");
 
-            $cryptopia = new cryptopia();
+            $cryptopia = new huobipro();
             $cryptopia->load_markets(true);
             //$market = $cryptopia->market("ETH/BTC");
+
             $orders = $cryptopia->fetch_order_book("ETH/BTC");
 
             $i = $j = 0;
@@ -120,22 +127,28 @@ class ApiEndPointController extends Controller
     }
 
     /**
-     * $orders = $binance->fetch_order_book("ETH/BTC");
-
-    $i = $j = 0;
-    $bids = $asks = 0;
-    foreach ($orders["bids"] as $key => $value) {
-    $i++;
-    $bids += $value[0];
-    }
-    $aver_bid = $bids / $i;
-
-    foreach ($orders["asks"] as $key => $value) {
-    $j++;
-    $asks += $value[0];
-    }
-    $aver_ask = $asks / $j;
-
+     * @Route("test2")
+     *
+     * @return JsonResponse
      */
+    public function test2()
+    {
+        try {
+            date_default_timezone_set("UTC");
+
+            $cryptopia = new poloniex();
+            $cryptopia->load_markets(true);
+            $market = $cryptopia->market("ETH/BTC");
+
+            return new JsonResponse($market);
+        } catch (\Exception $e) {
+            $err = array(
+                $e->getMessage(),
+                $e->getFile(),
+                $e->getLine(),
+            );
+            return new JsonResponse($err);
+        }
+    }
 }
 

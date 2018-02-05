@@ -17,3 +17,19 @@ services:
     api.cryptopia:
         class: ApiBundle\Service\Cryptopia
         arguments: ["@service_container", "@doctrine.orm.entity_manager"]
+
+    api.gdax:
+        class: ApiBundle\Service\Gdax
+        arguments: ["@service_container", "@doctrine.orm.entity_manager"]
+
+    api.hitbtc:
+        class: ApiBundle\Service\Hitbtc
+        arguments: ["@service_container", "@doctrine.orm.entity_manager"]
+
+    api.huobipro:
+        class: ApiBundle\Service\Huobipro
+        arguments: ["@service_container", "@doctrine.orm.entity_manager"]
+
+    api.kraken:
+        class: ApiBundle\Service\Huobipro
+        arguments: ["@service_container", "@doctrine.orm.entity_manager"]

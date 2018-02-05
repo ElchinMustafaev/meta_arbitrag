@@ -3,13 +3,13 @@
  * Created by PhpStorm.
  * User: el
  * Date: 05.02.18
- * Time: 18:07
+ * Time: 18:39
  */
 
 namespace ApiBundle\Service;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class Cryptopia
+class Gdax
 {
     private $contailer;
 
@@ -37,18 +37,18 @@ class Cryptopia
                 ->em
                 ->getRepository('ApiBundle:ApiKey')
                 ->findOneBy(array(
-                        "exchange" => "cryptopia",
+                        "exchange" => "gdax",
                         "users" => $name,
                     )
                 );
 
-            $cryptopia = new \ccxt\cryptopia();
-            $cryptopia->apiKey = $db_record->getKey();
-            $cryptopia->secret = $db_record->getSecretKey();
+            $gdax = new \ccxt\gdax();
+            $gdax->apiKey = $db_record->getKey();
+            $gdax->secret = $db_record->getSecretKey();
 
-            $cryptopia->load_markets(true);
+            $gdax->load_markets(true);
 
-            $orders = $cryptopia->fetch_order_book($pair);
+            $orders = $gdax->fetch_order_book($pair);
 
             $i = $j = 0;
             $bids = $asks = 0;
@@ -76,4 +76,5 @@ class Cryptopia
             );
         }
     }
+
 }

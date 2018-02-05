@@ -3,13 +3,13 @@
  * Created by PhpStorm.
  * User: el
  * Date: 05.02.18
- * Time: 18:07
+ * Time: 19:30
  */
 
 namespace ApiBundle\Service;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class Cryptopia
+class Huobipro
 {
     private $contailer;
 
@@ -37,18 +37,18 @@ class Cryptopia
                 ->em
                 ->getRepository('ApiBundle:ApiKey')
                 ->findOneBy(array(
-                        "exchange" => "cryptopia",
+                        "exchange" => "huobipro",
                         "users" => $name,
                     )
                 );
 
-            $cryptopia = new \ccxt\cryptopia();
-            $cryptopia->apiKey = $db_record->getKey();
-            $cryptopia->secret = $db_record->getSecretKey();
+            $huobipro = new \ccxt\huobipro();
+            $huobipro->apiKey = $db_record->getKey();
+            $huobipro->secret = $db_record->getSecretKey();
 
-            $cryptopia->load_markets(true);
+            $huobipro->load_markets(true);
 
-            $orders = $cryptopia->fetch_order_book($pair);
+            $orders = $huobipro->fetch_order_book($pair);
 
             $i = $j = 0;
             $bids = $asks = 0;
