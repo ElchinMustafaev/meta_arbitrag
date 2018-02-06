@@ -72,8 +72,8 @@ class ApiTradeCommand extends ContainerAwareCommand
                                 $key. " ask" => $second_result["ask"],
                                 "bid diff" => $first_result["bid"] - $second_result["bid"],
                                 "ask diff" => $first_result["ask"] - $second_result["ask"],
-                                "bid  spread" => ($first_result["bid"] / $second_result["bid"] - 1) * 100,
-                                "ask spread" => ($first_result["ask"] / $second_result["ask"] - 1) * 100,
+                                "bid  spread" => ($first_result["bid"] / $second_result["ask"] - 1) * 100,
+                                "ask spread" => ($first_result["ask"] / $second_result["bid"] - 1) * 100,
                             );
                             $result = array_merge($result, $spreads);
                         } else {
@@ -116,8 +116,8 @@ class ApiTradeCommand extends ContainerAwareCommand
                         $second_exchange . " ask" => $second_result["ask"],
                         "bid diff" => $first_result["bid"] - $second_result["bid"],
                         "ask diff" => $first_result["ask"] - $second_result["ask"],
-                        "bid  spread" => ($first_result["bid"] / $second_result["bid"] - 1) * 100,
-                        "ask spread" => ($first_result["ask"] / $second_result["ask"] - 1) * 100,
+                        "bid  spread" => ($first_result["bid"] / $second_result["ask"] - 1) * 100,
+                        "ask spread" => ($first_result["ask"] / $second_result["bid"] - 1) * 100,
                     );
                     $result = array_merge($result, $spreads);
                 } else {
