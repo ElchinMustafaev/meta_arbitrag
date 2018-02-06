@@ -158,4 +158,28 @@ class ApiKey
     {
         return $this->pair;
     }
+
+    /**
+     * Set users
+     *
+     * @param string $users
+     *
+     * @return ApiKey
+     */
+    public function setUsers($users)
+    {
+        $this->users = $users;
+
+        return $this;
+    }
+
+    /**
+     * Get users
+     *
+     * @return string
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
 }
