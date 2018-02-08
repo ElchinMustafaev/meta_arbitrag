@@ -127,20 +127,43 @@ class ApiEndPointController extends Controller
     }
 
     /**
-     * @Route("test2")
+     * @Route("test_bd")
      *
      * @return JsonResponse
      */
-    public function test2()
+    public function test2(Request $request)
     {
         try {
-            date_default_timezone_set("UTC");
+            $exchange1 = $request->get("e1");
+            $exchange2 = $request->get("e2");
+            $pair = $request->get('p');
 
-            $cryptopia = new poloniex();
-            $cryptopia->load_markets(true);
-            $market = $cryptopia->market("ETH/BTC");
+            $em = $this->getDoctrine()->getManager();
 
-            return new JsonResponse($market);
+            $qb = $em->createQueryBuilder('h');
+            $qb
+                ->select("h.exchange1, h.exchange2, h.timeStamp, h.spread, h.revSpread")
+                ->from("ApiBundle:History", 'h')
+                ->where("h.exchange1 = :e1")
+                ->andWhere("h.exchange2 = :e2")
+                ->andWhere("h.pair = :p")
+                ->setParameter("e1", $exchange1)
+                ->setParameter("e2", $exchange2)
+                ->setParameter("p", $pair)
+            ;
+
+            $query = $qb->getQuery();
+            $objects = $query->getResult();
+
+            foreach ($objects as $key => $value) {
+                $result[] = array(
+                    "date:time" => date("Y-m-d H:i:s", $value["timeStamp"]),
+                    "spread" => $value["spread"],
+                    "revSpread" => $value["revSpread"],
+                );
+            }
+
+            return new JsonResponse($result);
         } catch (\Exception $e) {
             $err = array(
                 $e->getMessage(),
