@@ -40,12 +40,14 @@ class ApiHistoryCommand extends ContainerAwareCommand
                 "kraken" => $this->getContainer()->get("api.kraken"),
             );
 
+            $em = $this->getContainer()->get('doctrine')->getManager();
+
             foreach ($exchanges_array as $key1 => $value1) {
+                $first_result = $exchanges_array[$key1]->mainFunction($user_name, $pair);
                 foreach ($exchanges_array as $key2 => $value2) {
                     if ($key1 != $key2) {
                         $new_record = new History();
 
-                        $first_result = $exchanges_array[$key1]->mainFunction($user_name, $pair);
                         $second_result = $exchanges_array[$key2]->mainFunction($user_name, $pair);
 
                         $new_record->setExchange1($key1);
@@ -60,10 +62,10 @@ class ApiHistoryCommand extends ContainerAwareCommand
                             $new_record->setSpread($first_result["bid"]);
                             $new_record->setRevSpread($second_result["bid"]);
                         }
-                        $em = $this->getContainer()->get('doctrine')->getManager();
+
                         $em->persist($new_record);
                         $em->flush();
-                        unset($new_record, $first_result, $second_result, $em);
+                        unset($new_record, $second_result);
                     }
                 }
             }
