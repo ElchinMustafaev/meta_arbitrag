@@ -16,6 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ApiEndPointController extends Controller
 {
@@ -78,58 +79,12 @@ class ApiEndPointController extends Controller
         return new JsonResponse($record_array);
     }
 
-    /**
-     * @Route("test")
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
-    public function test(Request $request)
-    {
-        try {
-            date_default_timezone_set("UTC");
 
-            $cryptopia = new huobipro();
-            $cryptopia->load_markets(true);
-            //$market = $cryptopia->market("ETH/BTC");
-
-            $orders = $cryptopia->fetch_order_book("ETH/BTC");
-
-            $i = $j = 0;
-            $bids = $asks = 0;
-            foreach ($orders["bids"] as $key => $value) {
-                $i++;
-                $bids += $value[0];
-            }
-            $aver_bid = $bids / $i;
-
-            foreach ($orders["asks"] as $key => $value) {
-                $j++;
-                $asks += $value[0];
-            }
-            $aver_ask = $asks / $j;
-
-            return new JsonResponse(array(
-                "bid" => $aver_bid,
-                "ask" => $aver_ask,
-                )
-            );
-        } catch (\Exception $e) {
-            $err = array(
-                $e->getMessage(),
-                $e->getFile(),
-                $e->getLine(),
-            );
-            return new JsonResponse($err);
-
-        }
-    }
 
     /**
      * @Route("test_bd")
      *
-     * @return JsonResponse
+     * @return Response
      */
     public function test2(Request $request)
     {
@@ -154,16 +109,19 @@ class ApiEndPointController extends Controller
 
             $query = $qb->getQuery();
             $objects = $query->getResult();
+            $result = array();
 
             foreach ($objects as $key => $value) {
+                if (is_numeric($value["spread"]) && is_numeric($value["revSpread"]))
                 $result[] = array(
-                    "date:time" => date("Y-m-d H:i:s", $value["timeStamp"]),
-                    "spread" => $value["spread"],
-                    "revSpread" => $value["revSpread"],
+                    date("Y-m-d H:i:s", $value["timeStamp"]),
+                    $value["spread"],
+                    $value["revSpread"],
                 );
             }
 
-            return new JsonResponse($result);
+            $this->testgraph($result);
+            //return new Response($html);
         } catch (\Exception $e) {
             $err = array(
                 $e->getMessage(),
@@ -172,6 +130,37 @@ class ApiEndPointController extends Controller
             );
             return new JsonResponse($err);
         }
+    }
+
+    /**
+     * @Route("form")
+     *
+     * @return Response
+     */
+    public function form()
+    {
+        $html = "
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset=\"utf-8\">
+    
+    <body>
+    <form action=\"test_bd\" method=\"post\">
+        <p>first exchange: <input type=\"text\" name=\"e1\" /></p>
+        <p>second exchange: <input type=\"text\" name=\"e2\" /></p>
+        <p>pair: <input type=\"text\" name=\"p\" /></p>
+        <p><input type=\"submit\" /></p>
+    </form>
+    </body>
+    </html>
+    ";
+        return new  Response($html);
+    }
+
+    public function testgraph($array)
+    {
+
     }
 }
 
