@@ -32,6 +32,7 @@
  */
 
  /* pCache class definition */
+ namespace ApiBundle\pClass;
  class pCache
   {
    var $HashKey     = "";

@@ -1,4 +1,5 @@
 <?php
+
  /*
      pChart - a PHP class to build charts!
      Copyright (C) 2008 Jean-Damien POGOLOTTI
@@ -92,7 +93,7 @@
       Render($FileName)
       Stroke()
  */
- 
+ namespace ApiBundle\pClass;
  /* Declare some script wide constants */
  define("SCALE_NORMAL",1);
  define("SCALE_ADDALL",2);
@@ -115,6 +116,8 @@
  define("ALIGN_BOTTOM_RIGHT",9);
 
  /* pChart class definition */
+
+
  class pChart
   {
    /* Palettes definition */
