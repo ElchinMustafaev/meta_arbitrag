@@ -3,20 +3,13 @@
 namespace ApiBundle\Controller;
 
 use ApiBundle\Entity\ApiKey;
-use ccxt\binance;
-use ccxt\bittrex;
-use ccxt\cryptopia;
-use ccxt\gdax;
-use ccxt\hitbtc2;
-use ccxt\huobi;
-use ccxt\huobipro;
-use ccxt\kraken;
-use ccxt\poloniex;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use ApiBundle\pClass\pData;
+use ApiBundle\pClass\pChart;
 
 class ApiEndPointController extends Controller
 {
@@ -82,11 +75,11 @@ class ApiEndPointController extends Controller
 
 
     /**
-     * @Route("test_bd")
+     * @Route("test_db")
      *
      * @return Response
      */
-    public function test2(Request $request)
+    public function getFromDb(Request $request)
     {
         try {
             $exchange1 = $request->get("e1");
@@ -109,7 +102,11 @@ class ApiEndPointController extends Controller
 
             $query = $qb->getQuery();
             $objects = $query->getResult();
-            $result = array();
+            $result[] = array(
+                "DateTime",
+                "Spread",
+                "Rev Spread"
+            );
 
             foreach ($objects as $key => $value) {
                 if (is_numeric($value["spread"]) && is_numeric($value["revSpread"]))
@@ -120,8 +117,9 @@ class ApiEndPointController extends Controller
                 );
             }
 
-            $this->testgraph($result);
-            //return new Response($html);
+           // $this->chart($result);
+            //return new JsonResponse($result);
+            return new Response($this->googleChart($result, $pair));
         } catch (\Exception $e) {
             $err = array(
                 $e->getMessage(),
@@ -132,35 +130,47 @@ class ApiEndPointController extends Controller
         }
     }
 
-    /**
-     * @Route("form")
-     *
-     * @return Response
-     */
-    public function form()
-    {
-        $html = "
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <meta charset=\"utf-8\">
-    
-    <body>
-    <form action=\"test_bd\" method=\"post\">
-        <p>first exchange: <input type=\"text\" name=\"e1\" /></p>
-        <p>second exchange: <input type=\"text\" name=\"e2\" /></p>
-        <p>pair: <input type=\"text\" name=\"p\" /></p>
-        <p><input type=\"submit\" /></p>
-    </form>
-    </body>
-    </html>
-    ";
-        return new  Response($html);
-    }
-
-    public function testgraph($array)
+    public function googleChart($array, $pair)
     {
 
+        $array = json_encode($array);
+       $html = "<html>
+  <head>
+    <script type=\"text/javascript\" src=\"https://www.gstatic.com/charts/loader.js\"></script>
+    <script type=\"text/javascript\">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var array = JSON.parse('$array');
+        var i;
+        
+        for(i = 1; i < array.length; i++){
+            array[i][1] = parseFloat(array[i][1]);
+            array[i][2] = parseFloat(array[i][2]);
+        }
+        var data = google.visualization.arrayToDataTable(array);
+
+        var options = {
+          title: 'Spread Chart ' + '$pair',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+  <body>
+    <div id=\"curve_chart\" style=\"width: 100%; height: 500px\"></div>
+  </body>
+</html>";
+
+
+
+        return $html;
     }
 }
 
