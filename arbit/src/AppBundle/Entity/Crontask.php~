@@ -1,0 +1,63 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Crontask
+ *
+ * @ORM\Table(name="crontask")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CrontaskRepository")
+ */
+class Crontask
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="enabled", type="boolean", nullable=false)
+     */
+    private $enabled;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="task", type="string", nullable=false)
+     */
+    private $task;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="period", type="integer", nullable=false)
+     */
+    private $period;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="last_start", type="integer", nullable=false)
+     */
+    private $lastStart;
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+}
+
