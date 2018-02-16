@@ -69,30 +69,10 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ApiEndPointController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ApiBundle/Controller/ApiEndPointController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1581">
-              <caret line="161" column="34" lean-forward="false" selection-start-line="161" selection-start-column="34" selection-end-line="161" selection-end-column="34" />
-              <folding>
-                <element signature="e#40#68#0#PHP" expanded="true" />
-                <marker date="1518453669967" expanded="true" signature="3924:4916" ph="..." />
-                <marker date="1518453669967" expanded="true" signature="3933:4817" ph="..." />
-                <marker date="1518453669967" expanded="true" signature="4067:4807" ph="..." />
-                <marker date="1518453669967" expanded="true" signature="4212:4794" ph="{...}" />
-                <marker date="1518453669967" expanded="true" signature="4321:4434" ph="{...}" />
-                <marker date="1518453669967" expanded="true" signature="4523:4652" ph="{&quot;curveType&quot;: 'function'...}" />
-                <marker date="1518453669967" expanded="true" signature="4826:4908" ph="..." />
-                <marker date="1518453669967" expanded="true" signature="4864:4890" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="CronTaskController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/CronTaskController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="423">
+            <state relative-caret-position="555">
               <caret line="105" column="29" lean-forward="false" selection-start-line="105" selection-start-column="29" selection-end-line="105" selection-end-column="29" />
               <folding>
                 <element signature="e#40#70#0#PHP" expanded="true" />
@@ -101,37 +81,55 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CommandObserverCommand.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/CommandObserverCommand.php">
+      <file leaf-file-name="ApiEndPointController.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/ApiBundle/Controller/ApiEndPointController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="615">
-              <caret line="45" column="20" lean-forward="false" selection-start-line="45" selection-start-column="20" selection-end-line="45" selection-end-column="20" />
-              <folding />
+            <state relative-caret-position="296">
+              <caret line="87" column="14" lean-forward="false" selection-start-line="87" selection-start-column="14" selection-end-line="87" selection-end-column="14" />
+              <folding>
+                <element signature="e#40#68#0#PHP" expanded="true" />
+                <marker date="1518769718999" expanded="true" signature="3953:4945" ph="..." />
+                <marker date="1518769718999" expanded="true" signature="3962:4846" ph="..." />
+                <marker date="1518769718999" expanded="true" signature="4096:4836" ph="..." />
+                <marker date="1518769718999" expanded="true" signature="4241:4823" ph="{...}" />
+                <marker date="1518769718999" expanded="true" signature="4350:4463" ph="{...}" />
+                <marker date="1518769718999" expanded="true" signature="4552:4681" ph="{&quot;curveType&quot;: 'function'...}" />
+                <marker date="1518769718999" expanded="true" signature="4855:4937" ph="..." />
+                <marker date="1518769718999" expanded="true" signature="4893:4919" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Crontask.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Crontask.php">
+      <file leaf-file-name="FrontController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ApiBundle/Controller/FrontController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="834">
-              <caret line="141" column="32" lean-forward="false" selection-start-line="141" selection-start-column="20" selection-end-line="141" selection-end-column="32" />
-              <folding />
+            <state relative-caret-position="132">
+              <caret line="19" column="10" lean-forward="false" selection-start-line="19" selection-start-column="10" selection-end-line="19" selection-end-column="10" />
+              <folding>
+                <marker date="1518769719004" expanded="true" signature="459:895" ph="..." />
+                <marker date="1518769719004" expanded="true" signature="470:513" ph="..." />
+                <marker date="1518769719004" expanded="true" signature="519:883" ph="..." />
+                <marker date="1518769719004" expanded="true" signature="577:871" ph="..." />
+                <marker date="1518769719004" expanded="true" signature="733:811" ph="..." />
+                <marker date="1518769719004" expanded="true" signature="752:807" ph="..." />
+                <marker date="1518769719004" expanded="true" signature="777:807" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.crontask" pinned="false" current-in-tab="true">
-        <entry file="dbDummy://dbtable:/cd114534/bd3f71a2-0c57-4de0-9e00-08b0ea566081/main.crontask">
-          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-            <state>
-              <filtering enabled="true" />
-            </state>
-          </provider>
+      <file leaf-file-name="main.history" pinned="false" current-in-tab="false">
+        <entry file="dbDummy://dbtable:/cd114534/bd3f71a2-0c57-4de0-9e00-08b0ea566081/main.history">
           <provider editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
+            </state>
+          </provider>
+          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+            <state>
+              <filtering enabled="true" />
             </state>
           </provider>
         </entry>
@@ -162,10 +160,11 @@
         <option value="$PROJECT_DIR$/src/ApiBundle/Entity/History.php" />
         <option value="$PROJECT_DIR$/src/ApiBundle/Command/ApiHistoryCommand.php" />
         <option value="$PROJECT_DIR$/src/ApiBundle/Resources/views/Default/index.html.twig" />
-        <option value="$PROJECT_DIR$/src/ApiBundle/Controller/ApiEndPointController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/Crontask.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Command/CommandObserverCommand.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/CronTaskController.php" />
+        <option value="$PROJECT_DIR$/src/ApiBundle/Controller/FrontController.php" />
+        <option value="$PROJECT_DIR$/src/ApiBundle/Controller/ApiEndPointController.php" />
       </list>
     </option>
   </component>
@@ -196,7 +195,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -299,11 +297,29 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="AppBundle" />
+              <option name="myItemId" value="ApiBundle" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="arbit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="arbit" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Command" />
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ApiBundle" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Controller" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -323,6 +339,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -432,12 +449,13 @@
       <workItem from="1516902843536" duration="1675000" />
       <workItem from="1517480265759" duration="11012000" />
       <workItem from="1517941010670" duration="15745000" />
-      <workItem from="1518422722092" duration="6727000" />
+      <workItem from="1518422722092" duration="6881000" />
+      <workItem from="1518766567054" duration="2625000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="42879000" />
+    <option name="totallyTimeSpent" value="45658000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -473,22 +491,15 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/ApiBundle/Command/ApiTradeCommand.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="900">
-          <caret line="68" column="57" lean-forward="true" selection-start-line="68" selection-start-column="57" selection-end-line="68" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
     <entry file="dbDummy://dbtable:/cd114534/bd3f71a2-0c57-4de0-9e00-08b0ea566081/main.api_key">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
         </state>
       </provider>
     </entry>
@@ -535,14 +546,14 @@
       </provider>
     </entry>
     <entry file="dbDummy://dbtable:/cd114534/bd3f71a2-0c57-4de0-9e00-08b0ea566081/main.sqlite_master">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
         </state>
       </provider>
     </entry>
@@ -561,14 +572,14 @@
       </provider>
     </entry>
     <entry file="dbDummy://dbtable:/cd114534/bd3f71a2-0c57-4de0-9e00-08b0ea566081/main.api_key">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
         </state>
       </provider>
     </entry>
@@ -586,14 +597,14 @@
           <caret line="64" column="44" lean-forward="false" selection-start-line="64" selection-start-column="44" selection-end-line="64" selection-end-column="44" />
           <folding>
             <element signature="e#40#68#0#PHP" expanded="true" />
-            <marker date="1518453669967" expanded="true" signature="3924:4916" ph="..." />
-            <marker date="1518453669967" expanded="true" signature="3933:4817" ph="..." />
-            <marker date="1518453669967" expanded="true" signature="4067:4807" ph="..." />
-            <marker date="1518453669967" expanded="true" signature="4212:4794" ph="{...}" />
-            <marker date="1518453669967" expanded="true" signature="4321:4434" ph="{...}" />
-            <marker date="1518453669967" expanded="true" signature="4523:4652" ph="{&quot;curveType&quot;: 'function'...}" />
-            <marker date="1518453669967" expanded="true" signature="4826:4908" ph="..." />
-            <marker date="1518453669967" expanded="true" signature="4864:4890" ph="..." />
+            <marker date="1518769718999" expanded="true" signature="3953:4945" ph="..." />
+            <marker date="1518769718999" expanded="true" signature="3962:4846" ph="..." />
+            <marker date="1518769718999" expanded="true" signature="4096:4836" ph="..." />
+            <marker date="1518769718999" expanded="true" signature="4241:4823" ph="{...}" />
+            <marker date="1518769718999" expanded="true" signature="4350:4463" ph="{...}" />
+            <marker date="1518769718999" expanded="true" signature="4552:4681" ph="{&quot;curveType&quot;: 'function'...}" />
+            <marker date="1518769718999" expanded="true" signature="4855:4937" ph="..." />
+            <marker date="1518769718999" expanded="true" signature="4893:4919" ph="..." />
           </folding>
         </state>
       </provider>
@@ -641,14 +652,14 @@
       </provider>
     </entry>
     <entry file="dbDummy://dbtable:/cd114534/bd3f71a2-0c57-4de0-9e00-08b0ea566081/main.sqlite_master">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
         </state>
       </provider>
     </entry>
@@ -706,7 +717,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="596">
           <caret line="61" column="29" lean-forward="false" selection-start-line="61" selection-start-column="29" selection-end-line="61" selection-end-column="29" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -734,14 +744,14 @@
       </provider>
     </entry>
     <entry file="dbDummy://dbtable:/cd114534/d430f1e5-b130-4db9-9b70-65b9eefe2a9d/main.api_key">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
         </state>
       </provider>
     </entry>
@@ -761,14 +771,14 @@
       </provider>
     </entry>
     <entry file="dbDummy://dbtable:/cd114534/d430f1e5-b130-4db9-9b70-65b9eefe2a9d/main.history">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
         </state>
       </provider>
     </entry>
@@ -801,69 +811,35 @@
       </provider>
     </entry>
     <entry file="dbDummy://dbtable:/cd114534/bd3f71a2-0c57-4de0-9e00-08b0ea566081/main.api_key">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ApiBundle/pClass/pCache.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ApiBundle/Controller/ApiEndPointController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1581">
-          <caret line="161" column="34" lean-forward="false" selection-start-line="161" selection-start-column="34" selection-end-line="161" selection-end-column="34" />
-          <folding>
-            <element signature="e#40#68#0#PHP" expanded="true" />
-            <marker date="1518453669967" expanded="true" signature="3924:4916" ph="..." />
-            <marker date="1518453669967" expanded="true" signature="3933:4817" ph="..." />
-            <marker date="1518453669967" expanded="true" signature="4067:4807" ph="..." />
-            <marker date="1518453669967" expanded="true" signature="4212:4794" ph="{...}" />
-            <marker date="1518453669967" expanded="true" signature="4321:4434" ph="{...}" />
-            <marker date="1518453669967" expanded="true" signature="4523:4652" ph="{&quot;curveType&quot;: 'function'...}" />
-            <marker date="1518453669967" expanded="true" signature="4826:4908" ph="..." />
-            <marker date="1518453669967" expanded="true" signature="4864:4890" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ApiBundle/pClass/pCache.class.php" />
     <entry file="file://$PROJECT_DIR$/src/ApiBundle/Resources/views/Default/index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="dbDummy://dbtable:/cd114534/bd3f71a2-0c57-4de0-9e00-08b0ea566081/main.history">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
+    <entry file="dbDummy://dbtable:/cd114534/bd3f71a2-0c57-4de0-9e00-08b0ea566081/main.crontask">
       <provider editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Crontask.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="834">
-          <caret line="141" column="32" lean-forward="false" selection-start-line="141" selection-start-column="20" selection-end-line="141" selection-end-column="32" />
-          <folding />
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
         </state>
       </provider>
     </entry>
@@ -875,9 +851,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Crontask.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="774">
+          <caret line="141" column="32" lean-forward="false" selection-start-line="141" selection-start-column="20" selection-end-line="141" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/cd114534/bd3f71a2-0c57-4de0-9e00-08b0ea566081/main.history">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/CronTaskController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="423">
+        <state relative-caret-position="555">
           <caret line="105" column="29" lean-forward="false" selection-start-line="105" selection-start-column="29" selection-end-line="105" selection-end-column="29" />
           <folding>
             <element signature="e#40#70#0#PHP" expanded="true" />
@@ -885,16 +882,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="dbDummy://dbtable:/cd114534/bd3f71a2-0c57-4de0-9e00-08b0ea566081/main.crontask">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
+    <entry file="file://$PROJECT_DIR$/src/ApiBundle/Controller/FrontController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="19" column="10" lean-forward="false" selection-start-line="19" selection-start-column="10" selection-end-line="19" selection-end-column="10" />
+          <folding>
+            <marker date="1518769719004" expanded="true" signature="459:895" ph="..." />
+            <marker date="1518769719004" expanded="true" signature="470:513" ph="..." />
+            <marker date="1518769719004" expanded="true" signature="519:883" ph="..." />
+            <marker date="1518769719004" expanded="true" signature="577:871" ph="..." />
+            <marker date="1518769719004" expanded="true" signature="733:811" ph="..." />
+            <marker date="1518769719004" expanded="true" signature="752:807" ph="..." />
+            <marker date="1518769719004" expanded="true" signature="777:807" ph="..." />
+          </folding>
         </state>
       </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ApiBundle/Controller/ApiEndPointController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="296">
+          <caret line="87" column="14" lean-forward="false" selection-start-line="87" selection-start-column="14" selection-end-line="87" selection-end-column="14" />
+          <folding>
+            <element signature="e#40#68#0#PHP" expanded="true" />
+            <marker date="1518769718999" expanded="true" signature="3953:4945" ph="..." />
+            <marker date="1518769718999" expanded="true" signature="3962:4846" ph="..." />
+            <marker date="1518769718999" expanded="true" signature="4096:4836" ph="..." />
+            <marker date="1518769718999" expanded="true" signature="4241:4823" ph="{...}" />
+            <marker date="1518769718999" expanded="true" signature="4350:4463" ph="{...}" />
+            <marker date="1518769718999" expanded="true" signature="4552:4681" ph="{&quot;curveType&quot;: 'function'...}" />
+            <marker date="1518769718999" expanded="true" signature="4855:4937" ph="..." />
+            <marker date="1518769718999" expanded="true" signature="4893:4919" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>

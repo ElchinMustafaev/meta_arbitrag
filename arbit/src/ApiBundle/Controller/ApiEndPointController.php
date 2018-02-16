@@ -85,7 +85,7 @@ class ApiEndPointController extends Controller
             $exchange1 = $request->get("e1");
             $exchange2 = $request->get("e2");
             $pair = $request->get('p');
-
+            //print_r($pair);
             $em = $this->getDoctrine()->getManager();
 
             $qb = $em->createQueryBuilder('h');
@@ -171,6 +171,11 @@ class ApiEndPointController extends Controller
 
 
         return $html;
+    }
+
+    public function getList()
+    {
+
     }
 }
 
