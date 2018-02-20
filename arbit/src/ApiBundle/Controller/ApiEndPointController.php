@@ -119,7 +119,7 @@ class ApiEndPointController extends Controller
 
            // $this->chart($result);
             //return new JsonResponse($result);
-            return new Response($this->googleChart($result, $pair));
+            return new Response($this->googleChart($result, $pair, $exchange1, $exchange2));
         } catch (\Exception $e) {
             $err = array(
                 $e->getMessage(),
@@ -130,7 +130,7 @@ class ApiEndPointController extends Controller
         }
     }
 
-    public function googleChart($array, $pair)
+    public function googleChart($array, $pair, $exchange1, $exchange2)
     {
 
         $array = json_encode($array);
@@ -152,7 +152,7 @@ class ApiEndPointController extends Controller
         var data = google.visualization.arrayToDataTable(array);
 
         var options = {
-          title: 'Spread Chart ' + '$pair',
+          title: '$exchange1' . '/' . '$exchange2' . 'Spread Chart ' + '$pair',
           curveType: 'function',
           legend: { position: 'bottom' }
         };

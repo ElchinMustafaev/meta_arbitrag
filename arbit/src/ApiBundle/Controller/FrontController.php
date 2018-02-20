@@ -29,7 +29,7 @@ class FrontController extends Controller
         <p>first exchange: <input type=\"text\" name=\"e1\" /></p>
         <p>second exchange: <input type=\"text\" name=\"e2\" /></p>
         
-        <p><select size=\"3\" name=\"p\" form=\"data\">
+        <p><select name=\"p\" form=\"data\">
     " .$pair ."
     </select></p>
       
