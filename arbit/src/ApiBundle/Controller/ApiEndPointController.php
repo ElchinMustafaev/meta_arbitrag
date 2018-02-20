@@ -152,7 +152,7 @@ class ApiEndPointController extends Controller
         var data = google.visualization.arrayToDataTable(array);
 
         var options = {
-          title: '$exchange1' + '/' + '$exchange2' + 'Spread Chart ' + '$pair',
+          title: '$exchange1' + '/' + '$exchange2' + ' Spread Chart ' + '$pair',
           curveType: 'function',
           legend: { position: 'bottom' }
         };
