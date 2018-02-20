@@ -111,7 +111,7 @@ class ApiEndPointController extends Controller
             foreach ($objects as $key => $value) {
                 if (is_numeric($value["spread"]) && is_numeric($value["revSpread"]))
                 $result[] = array(
-                    date("Y-m-d H:i:s", $value["timeStamp"]),
+                    date("y-m-d H:i", $value["timeStamp"]),
                     $value["spread"],
                     $value["revSpread"],
                 );
@@ -162,6 +162,9 @@ class ApiEndPointController extends Controller
         chart.draw(data, options);
       }
     </script>
+    <form>
+<input type=\"button\" value=\"Назад\" onClick='location.href=\"/form\"'>
+</form
   </head>
   <body>
     <div id=\"curve_chart\" style=\"width: 100%; height: 500px\"></div>
