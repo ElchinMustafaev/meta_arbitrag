@@ -1,0 +1,22 @@
+body {
+    background-color: #333;
+}
+
+p {
+    color: white;
+}
+
+input {
+    text-align: center;
+    align: center;
+    width: 150px;
+}
+
+select {
+    width: 150px;
+}
+
+.formex {
+    padding-left: 35%;
+    padding-top: 20%;
+}

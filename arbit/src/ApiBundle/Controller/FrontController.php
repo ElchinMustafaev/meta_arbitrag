@@ -23,18 +23,29 @@ class FrontController extends Controller
     <html>
     <head>
         <meta charset=\"utf-8\">
-    
+        <link rel='stylesheet' href='css/styles.css'>
     <body>
+    <div class='formex'>
     <form action=\"test_db\" method=\"post\" id=\"data\">
-        <p>first exchange: <input type=\"text\" name=\"e1\" /></p>
-        <p>second exchange: <input type=\"text\" name=\"e2\" /></p>
-        
+        <table style='border: 1px'>
+        <tr>
+        <td style='vertical-align: top'>
+        <p>first exchange: </p>
+        <p>second exchange: </p>
+        </td>
+        <td>
+        <p><input type=\"text\" name=\"e1\" /></p>
+        <p><input type=\"text\" name=\"e2\" /></p>
         <p><select name=\"p\" form=\"data\">
     " .$pair ."
     </select></p>
       
         <p><input type=\"submit\" /></p>
+        </td>
+        </tr>
+        </table>
     </form>
+    <div>
     </body>
     </html>
     ";
