@@ -38,6 +38,9 @@ class ApiHistoryCommand extends ContainerAwareCommand
                 "hitbtc" => $this->getContainer()->get("api.hitbtc"),
                 "huobipro" => $this->getContainer()->get("api.huobipro"),
                 "kraken" => $this->getContainer()->get("api.kraken"),
+                "okex" => $this->getContainer()->get("api.okex"),
+                "bittrex" => $this->getContainer()->get("api.bittrex"),
+                "bithumb" => $this->getContainer()->get("api.bithumb"),
             );
 
             $em = $this->getContainer()->get('doctrine')->getManager();

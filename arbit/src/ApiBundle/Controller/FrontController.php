@@ -17,6 +17,7 @@ class FrontController extends Controller
     public function form()
     {
         $pair = $this->getList();
+        $exchange = $this->getExchanges();
         //print_r($pair);
         $html = "
     <!DOCTYPE html>
@@ -34,8 +35,14 @@ class FrontController extends Controller
         <p>second exchange: </p>
         </td>
         <td>
-        <p><input type=\"text\" name=\"e1\" /></p>
-        <p><input type=\"text\" name=\"e2\" /></p>
+        
+        <p><select name=\"e1\" form=\"data\">
+    " .$exchange ."
+    </select></p>
+        
+        <p><select name=\"e2\" form=\"data\">
+    " .$exchange ."
+    </select></p>
         <p><select name=\"p\" form=\"data\">
     " .$pair ."
     </select></p>
@@ -67,6 +74,25 @@ class FrontController extends Controller
         $clear_pair = "";
         foreach ($pairs as $pair) {
             $clear_pair .= '<option value="' . $pair["pair"] . '">' . $pair["pair"] . "</option>\n";
+        }
+        return $clear_pair;
+    }
+
+    public function getExchanges()
+    {
+        $em = $this
+            ->getDoctrine()
+            ->getManager();
+        $qb = $em->createQueryBuilder("l");
+        $qb->select("l.exchange1")
+            ->from("ApiBundle:History", "l")
+            ->groupby("l.exchange1")
+        ;
+        $query = $qb->getQuery();
+        $exchange = $query->getResult();
+        $clear_pair = "";
+        foreach ($exchange as $e) {
+            $clear_pair .= '<option value="' . $e["exchange1"] . '">' . $e["exchange1"] . "</option>\n";
         }
         return $clear_pair;
     }

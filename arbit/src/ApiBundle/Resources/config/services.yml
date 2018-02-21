@@ -33,3 +33,15 @@ services:
     api.kraken:
         class: ApiBundle\Service\Huobipro
         arguments: ["@service_container", "@doctrine.orm.entity_manager"]
+
+    api.bittrex:
+        class: ApiBundle\Service\Bittrex
+        arguments: ["@service_container", "@doctrine.orm.entity_manager"]
+
+    api.okex:
+        class: ApiBundle\Service\Okex
+        arguments: ["@service_container", "@doctrine.orm.entity_manager"]
+
+    api.bithumb:
+        class: ApiBundle\Service\Bithumb
+        arguments: ["@service_container", "@doctrine.orm.entity_manager"]
