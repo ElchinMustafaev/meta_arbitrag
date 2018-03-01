@@ -61,10 +61,8 @@ class TradeHelper
                     $exchange1 . " ask" => $info_e1["ask"],
                     $exchange2 . " bid" => $info_e2["bid"],
                     $exchange2 . " ask" => $info_e2["ask"],
-                    "bid diff" => $info_e1["bid"] - $info_e2["bid"],
-                    "ask diff" => $info_e1["ask"] - $info_e2["ask"],
-                    "bid  spread" => ($info_e1["bid"] / $info_e2["ask"] - 1) * 100,
-                    "ask spread" => ($info_e1["ask"] / $info_e2["bid"] - 1) * 100,
+                    "spread" => ($info_e1["bid"] / $info_e2["ask"] - 1) * 100,
+                    "rev spread" => ($info_e1["ask"] / $info_e2["bid"] - 1) * 100,
                 );
                 return $spreads;
             } else {
