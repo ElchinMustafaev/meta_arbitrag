@@ -59,6 +59,30 @@ class FrontController extends Controller
         return new  Response($html);
     }
 
+    /**
+     * @Route("table")
+     *
+     * @return Response
+     */
+    public function table()
+    {
+        $dash_board_helper = $this->get('api.dash');
+        $result = $dash_board_helper->getInfoForTable();
+        $html = '<table cellpadding="5" cellspacing="1" border="0">';
+        foreach ($result as $key => $value) {
+            $html .= "<tr>";
+            foreach ($value as $data)
+                $html .= "<td>".$data."</td>";
+            $html .= "</tr>";
+        }
+        $html .= "</table>";
+
+        return new Response($html);
+    }
+
+    /**
+     * @return string
+     */
     public function getList()
     {
         $em = $this
@@ -78,6 +102,9 @@ class FrontController extends Controller
         return $clear_pair;
     }
 
+    /**
+     * @return string
+     */
     public function getExchanges()
     {
         $em = $this

@@ -31,7 +31,7 @@ services:
         arguments: ["@service_container", "@doctrine.orm.entity_manager"]
 
     api.kraken:
-        class: ApiBundle\Service\Huobipro
+        class: ApiBundle\Service\Kraken
         arguments: ["@service_container", "@doctrine.orm.entity_manager"]
 
     api.bittrex:
@@ -44,4 +44,12 @@ services:
 
     api.bithumb:
         class: ApiBundle\Service\Bithumb
+        arguments: ["@service_container", "@doctrine.orm.entity_manager"]
+
+    api.dash:
+        class: ApiBundle\Service\DashBoard
+        arguments: ["@service_container", "@doctrine.orm.entity_manager"]
+
+    api.trade:
+        class: ApiBundle\Service\TradeHelper
         arguments: ["@service_container", "@doctrine.orm.entity_manager"]

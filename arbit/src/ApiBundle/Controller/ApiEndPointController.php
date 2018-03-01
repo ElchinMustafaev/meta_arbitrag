@@ -8,8 +8,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use ApiBundle\pClass\pData;
-use ApiBundle\pClass\pChart;
 
 class ApiEndPointController extends Controller
 {
@@ -176,9 +174,6 @@ class ApiEndPointController extends Controller
         return $html;
     }
 
-    public function getList()
-    {
 
-    }
 }
 

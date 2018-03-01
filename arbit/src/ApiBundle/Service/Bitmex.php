@@ -50,14 +50,26 @@ class Bitmex
             $bitmex->secret = $db_record->getSecretKey();
 
             $bitmex->load_markets(true);
-            $markets = $bitmex->market($pair);
 
-            $bitmex_bid = $markets["info"]['bidPrice'];
-            $bitmex_ask = $markets['info']['askPrice'];
+            $orders = $bitmex->fetch_order_book($pair);
+
+            $i = $j = 0;
+            $bids = $asks = 0;
+            foreach ($orders["bids"] as $key => $value) {
+                $i++;
+                $bids += $value[0];
+            }
+            $aver_bid = $bids / $i;
+
+            foreach ($orders["asks"] as $key => $value) {
+                $j++;
+                $asks += $value[0];
+            }
+            $aver_ask = $asks / $j;
 
             return array(
-                "bid" => $bitmex_bid,
-                "ask" => $bitmex_ask,
+                "bid" => $aver_bid,
+                "ask" => $aver_ask,
             );
         } catch (\Exception $e) {
             return array(

@@ -48,14 +48,26 @@ class Bittrex
             $bittrex->secret = $db_record->getSecretKey();
 
             $bittrex->load_markets(true);
-            $markets = $bittrex->market($pair);
 
-            $bittrex_bid = $markets["info"]['bidPrice'];
-            $bittrex_ask = $markets['info']['askPrice'];
+            $orders = $bittrex->fetch_order_book($pair);
+
+            $i = $j = 0;
+            $bids = $asks = 0;
+            foreach ($orders["bids"] as $key => $value) {
+                $i++;
+                $bids += $value[0];
+            }
+            $aver_bid = $bids / $i;
+
+            foreach ($orders["asks"] as $key => $value) {
+                $j++;
+                $asks += $value[0];
+            }
+            $aver_ask = $asks / $j;
 
             return array(
-                "bid" => $bittrex_bid,
-                "ask" => $bittrex_ask,
+                "bid" => $aver_bid,
+                "ask" => $aver_ask,
             );
         } catch (\Exception $e) {
             return array(
