@@ -3,6 +3,7 @@
 namespace ApiBundle\Controller;
 
 use ApiBundle\Entity\ApiKey;
+use ccxt\livecoin;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -172,6 +173,22 @@ class ApiEndPointController extends Controller
 
 
         return $html;
+    }
+
+    /**
+     * @Route("test")
+     *
+     * @return Response
+     */
+    public function test()
+    {
+        try {
+            $exchenge = new livecoin();
+
+            return new Response($exchenge->fetch_ticker('USD/BTC'));
+        } catch (\Exception $e) {
+            return new  Response($e->getMessage());
+        }
     }
 
 

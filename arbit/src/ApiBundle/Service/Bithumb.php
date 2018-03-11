@@ -47,27 +47,12 @@ class Bithumb
             $bithumb->apiKey = $db_record->getKey();
             $bithumb->secret = $db_record->getSecretKey();
 
-            $bithumb->load_markets(true);
-
-            $orders = $bithumb->fetch_order_book($pair);
-
-            $i = $j = 0;
-            $bids = $asks = 0;
-            foreach ($orders["bids"] as $key => $value) {
-                $i++;
-                $bids += $value[0];
-            }
-            $aver_bid = $bids / $i;
-
-            foreach ($orders["asks"] as $key => $value) {
-                $j++;
-                $asks += $value[0];
-            }
-            $aver_ask = $asks / $j;
+            $bid = ($bithumb->fetch_ticker ($pair)['bid']);
+            $ask = ($bithumb->fetch_ticker ($pair)['ask']);
 
             return array(
-                "bid" => $aver_bid,
-                "ask" => $aver_ask,
+                "bid" => $bid,
+                "ask" => $ask,
             );
         } catch (\Exception $e) {
             return array(

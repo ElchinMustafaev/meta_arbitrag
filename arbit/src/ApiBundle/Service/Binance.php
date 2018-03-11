@@ -47,28 +47,13 @@ class Binance
             $binance->apiKey = $db_record->getKey();
             $binance->secret = $db_record->getSecretKey();
 
-            $binance->load_markets(true);
 
-            $orders = $binance->fetch_order_book($pair);
-
-            $i = $j = 0;
-            $bids = $asks = 0;
-            foreach ($orders["bids"] as $key => $value) {
-                $i++;
-                $bids += $value[0];
-            }
-            $aver_bid = $bids / $i;
-
-            foreach ($orders["asks"] as $key => $value) {
-                $j++;
-                $asks += $value[0];
-            }
-            $aver_ask = $asks / $j;
-
+            $bid = ($binance->fetch_ticker ($pair)['bid']);
+            $ask = ($binance->fetch_ticker ($pair)['ask']);
 
             return array(
-                "bid" => $aver_bid,
-                "ask" => $aver_ask,
+                "bid" => $bid,
+                "ask" => $ask,
             );
         } catch (\Exception $e) {
             return array(

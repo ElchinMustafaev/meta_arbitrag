@@ -46,28 +46,12 @@ class Cryptopia
             $cryptopia->apiKey = $db_record->getKey();
             $cryptopia->secret = $db_record->getSecretKey();
 
-            $cryptopia->load_markets(true);
-
-            $orders = $cryptopia->fetch_order_book($pair);
-
-            $i = $j = 0;
-            $bids = $asks = 0;
-            foreach ($orders["bids"] as $key => $value) {
-                $i++;
-                $bids += $value[0];
-            }
-            $aver_bid = $bids / $i;
-
-            foreach ($orders["asks"] as $key => $value) {
-                $j++;
-                $asks += $value[0];
-            }
-            $aver_ask = $asks / $j;
-
+            $bid = ($cryptopia->fetch_ticker ($pair)['bid']);
+            $ask = ($cryptopia->fetch_ticker ($pair)['ask']);
 
             return array(
-                "bid" => $aver_bid,
-                "ask" => $aver_ask,
+                "bid" => $bid,
+                "ask" => $ask,
             );
         } catch (\Exception $e) {
             return array(

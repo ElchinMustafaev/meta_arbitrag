@@ -124,4 +124,51 @@ class FrontController extends Controller
         return $clear_pair;
     }
 
+    /**
+     * @Route("set-trade")
+     *
+     * @return Response
+     */
+    public function setTrades()
+    {
+        $pair = $this->getList();
+        $exchange = $this->getExchanges();
+        $html = "
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset=\"utf-8\">
+        <link rel='stylesheet' href='css/styles.css'>
+    <body>
+    <div class='formex'>
+    <form action=\"set-trade-task\" style='color: #FFFFFF;' method=\"post\" id=\"data\">
+       First Exchange  <select name=\"e1\" form=\"data\">
+    " .$exchange ."
+    </select><br>
+    Second Exchange <select name=\"e2\" form=\"data\">
+    " .$exchange ."
+    </select><br>
+    Pair <select name=\"p\" form=\"data\">
+    " .$pair ."
+    </select><br>
+    Target Percent <input type=\"text\" name=\"target p\"><br>
+    Take Profit <input type=\"text\" name=\"take p\"><br>
+    Stop Loss<input type=\"text\" name=\"stop l\"><br>
+    Crypto Balance<input type=\"text\" name=\"crypto b\"><br>
+    
+    
+      
+      
+        <input type=\"submit\" />
+        
+    </form>
+    <div>
+    </body>
+    </html>
+    ";
+
+        return new  Response($html);
+    }
+
+
 }
