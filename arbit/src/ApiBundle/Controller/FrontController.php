@@ -2,8 +2,10 @@
 
 namespace ApiBundle\Controller;
 
+use AppBundle\Entity\TradeInfo;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class FrontController extends Controller
@@ -141,7 +143,7 @@ class FrontController extends Controller
         <link rel='stylesheet' href='css/styles.css'>
     <body>
     <div class='formex'>
-    <form action=\"set-trade-task\" style='color: #FFFFFF;' method=\"post\" id=\"data\">
+    <form action=\"set-trade-to-db\" style='color: #FFFFFF;' method=\"post\" id=\"data\">
        First Exchange  <select name=\"e1\" form=\"data\">
     " .$exchange ."
     </select><br>
@@ -155,7 +157,8 @@ class FrontController extends Controller
     Take Profit <input type=\"text\" name=\"take p\"><br>
     Stop Loss<input type=\"text\" name=\"stop l\"><br>
     Crypto Balance<input type=\"text\" name=\"crypto b\"><br>
-    
+    User Name<input type=\"text\" name=\"crypto b\"><br>
+    User Name<input type=\"text\" name=\"crypto b\"><br>
     
       
       
@@ -168,6 +171,33 @@ class FrontController extends Controller
     ";
 
         return new  Response($html);
+    }
+
+    /**
+     * @Route("set-trade-to-db")
+     */
+    public function setTradeToDb(Request $request)
+    {
+        try {
+            $content = $request->getContent();
+            $new_record = new TradeInfo();
+
+            $new_record->setFirstExchange($content['e1']);
+            $new_record->setSecondExchange($content['e2']);
+            $new_record->setPair($content['p']);
+            $new_record->setTargetPercent($content['target p']);
+            $new_record->setMaxLose($content['stop l']);
+            $new_record->setMinValue($content['take p']);
+            $new_record->setCriptoBalance($content['crypto b']);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($new_record);
+            $em->flush();
+
+            return new Response("true");
+        } catch (\Exception $e) {
+            return new Response($e->getMessage());
+        }
     }
 
 
