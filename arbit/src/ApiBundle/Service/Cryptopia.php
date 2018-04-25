@@ -33,18 +33,8 @@ class Cryptopia
     )
     {
         try {
-            $db_record = $this
-                ->em
-                ->getRepository('ApiBundle:ApiKey')
-                ->findOneBy(array(
-                        "exchange" => "cryptopia",
-                        "users" => $name,
-                    )
-                );
 
             $cryptopia = new \ccxt\cryptopia();
-            $cryptopia->apiKey = $db_record->getKey();
-            $cryptopia->secret = $db_record->getSecretKey();
 
             $bid = ($cryptopia->fetch_ticker ($pair)['bid']);
             $ask = ($cryptopia->fetch_ticker ($pair)['ask']);
@@ -59,5 +49,46 @@ class Cryptopia
                 "ask" => $e->getMessage(),
             );
         }
+    }
+
+    public function getBalance($name)
+    {
+        $db_record = $this
+            ->em
+            ->getRepository('ApiBundle:ApiKey')
+            ->findOneBy(array(
+                    "exchange" => "cryptopia",
+                    "users" => $name,
+                )
+            );
+
+        $cryptopia = new \ccxt\cryptopia();
+        $cryptopia->apiKey = $db_record->getKey();
+        $cryptopia->secret = $db_record->getSecretKey();
+
+        return $cryptopia->fetch_balance();
+    }
+
+    public function takeOrder($name, $pair, $balance, $side, $price)
+    {
+        $db_record = $this
+            ->em
+            ->getRepository('ApiBundle:ApiKey')
+            ->findOneBy(array(
+                    "exchange" => "cryptopia",
+                    "users" => $name,
+                )
+            );
+
+        $cryptopia = new \ccxt\cryptopia();
+        $cryptopia->apiKey = $db_record->getKey();
+        $cryptopia->secret = $db_record->getSecretKey();
+
+        return $cryptopia->create_order($pair, "limit", $side, $balance, $price);
+    }
+
+    public function getName()
+    {
+        return "cryptopia";
     }
 }

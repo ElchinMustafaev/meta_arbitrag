@@ -15,123 +15,112 @@ class ApiTradeCommand extends ContainerAwareCommand
         $this
             ->setName('api:trade')
             ->setDescription('check cost and start trade')
-            ->addOption('exchange1', null, InputOption::VALUE_REQUIRED, 'first wallet')
-            ->addOption("exchange2", null, InputOption::VALUE_OPTIONAL, "second wallet")
+            ->addOption('fe', null, InputOption::VALUE_REQUIRED, 'first wallet')
+            ->addOption("se", null, InputOption::VALUE_OPTIONAL, "second wallet")
             ->addOption("user_name", null, InputOption::VALUE_REQUIRED, "user name")
-            ->addOption("pair", null, InputOption::VALUE_REQUIRED, "pair")
+            ->addOption("ft", null, InputOption::VALUE_REQUIRED, "first token")
+            ->addOption("st", null, InputOption::VALUE_REQUIRED, "second token")
+            ->addOption("sb", null, InputOption::VALUE_REQUIRED, "start balance")
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        date_default_timezone_set("UTC");
+        try {
+            date_default_timezone_set("UTC");
 
-        $first_exchange = $input->getOption("exchange1");
-        $second_exchange = $input->getOption("exchange2");
-        $pair = $input->getOption("pair");
-        $user_name = $input->getOption("user_name");
+            $first_exchange = $input->getOption("fe");
+            $second_exchange = $input->getOption("se");
+            $first_token = $input->getOption("ft");
+            $second_token = $input->getOption("st");
+            $user_name = $input->getOption("user_name");
+            $start_balance = $input->getOption("sb");
+
+            $exchanges_array = array(
+                "livecoin" => $this->getContainer()->get("api.livecoin"),
+                "bitmex" => $this->getContainer()->get("api.bitmex"),
+                "binance" => $this->getContainer()->get("api.binance"),
+                "cryptopia" => $this->getContainer()->get("api.cryptopia"),
+                "gdax" => $this->getContainer()->get("api.gdax"),
+                "hitbtc" => $this->getContainer()->get("api.hitbtc"),
+                "huobipro" => $this->getContainer()->get("api.huobipro"),
+                "kraken" => $this->getContainer()->get("api.kraken"),
+                "okex" => $this->getContainer()->get("api.okex"),
+                "bittrex" => $this->getContainer()->get("api.bittrex"),
+                "bithumb" => $this->getContainer()->get("api.bithumb"),
+            );
 
 
-        $exchanges_array = array(
-            "livecoin" => $this->getContainer()->get("api.livecoin"),
-            "bitmex" => $this->getContainer()->get("api.bitmex"),
-            "binance" => $this->getContainer()->get("api.binance"),
-            "cryptopia" => $this->getContainer()->get("api.cryptopia"),
-            "gdax" => $this->getContainer()->get("api.gdax"),
-            "hitbtc" => $this->getContainer()->get("api.hitbtc"),
-            "huobipro" => $this->getContainer()->get("api.huobipro"),
-            "kraken" => $this->getContainer()->get("api.kraken"),
-            "okex" => $this->getContainer()->get("api.okex"),
-            "bittrex" => $this->getContainer()->get("api.bittrex"),
-            "bithumb" => $this->getContainer()->get("api.bithumb"),
-        );
+            $first_exchange = $exchanges_array[$first_exchange];
+            $second_exchange = $exchanges_array[$second_exchange];
 
-        if (empty($second_exchange)) {
-            $full_result = array();
-            $first_result = $exchanges_array[$first_exchange]->mainFunction($user_name, $pair);
+            $rate = $this->getPercentRate($first_exchange, $second_exchange, $first_token, $second_token);
+            $first_balance = $first_exchange->getBalance($user_name, $first_token, $second_token);
+            $first_ex_first_token_balance = $first_balance[0];
+            $first_ex_second_token_balance = $first_balance[1];
 
-            foreach ($exchanges_array as $key => $value) {
-                if ($key != $first_exchange) {
-                    try {
 
-                        $second_result = $exchanges_array[$key]->mainFunction($user_name, $pair);
+            if ($start_balance <= $first_ex_first_token_balance) {
+                $second_balance = $second_exchange->getBalance($user_name, $first_token, $second_token);
+                $second_ex_first_token_balance = $second_balance[0];
+                $second_ex_second_token_balance = $second_balance[0];
 
-                        $result = array(
-                            "pair" => $pair,
-                            "first exchange" => $first_exchange,
-                            "second exchange" => $key,
 
+                if (!empty($first_ex_first_token_balance) && !empty($second_ex_second_token_balance))
+                {
+                    $second_ex_order_balance = $start_balance * $rate["first rate"]["bid"];
+                    if ($second_ex_order_balance <= $second_ex_second_token_balance) {
+
+                        print_r($second_ex_order_balance . "\n");
+                        system(" php bin/console api:order " .
+                            "--fe=" . $first_exchange->getName() .
+                            " --se=" . $second_exchange->getName() . " --user_name=" . $user_name .
+                            " --ft=" . $first_token . " --st=" . $second_token ." --sb=" . $start_balance .
+                            " --feb=" . $rate["first rate"]["bid"] .
+                            " --sea=" . $rate["second rate"]["ask"]
                         );
 
-                        if (is_numeric($first_result["bid"]) && is_numeric($second_result["bid"])) {
-                            $spreads = array(
-                                $first_exchange . " bid" => $first_result["bid"],
-                                $first_exchange . " ask" => $first_result["ask"],
-                                $key . " bid" => $second_result["bid"],
-                                $key. " ask" => $second_result["ask"],
-                                "bid diff" => $first_result["bid"] - $second_result["bid"],
-                                "ask diff" => $first_result["ask"] - $second_result["ask"],
-                                "bid  spread" => ($first_result["bid"] / $second_result["ask"] - 1) * 100,
-                                "ask spread" => ($first_result["ask"] / $second_result["bid"] - 1) * 100,
-                            );
-                            $result = array_merge($result, $spreads);
-                        } else {
-                            $err = array(
-                                $first_exchange => $first_result["bid"],
-                                $key => $second_result["bid"],
-                            );
-                            $result = array_merge($result, $err);
-                        }
-                        $full_result[] = $result;
-                    } catch (\Exception $e) {
-                        $output->writeln($e->getMessage());
-                        $output->writeln($e->getFile());
-                        $output->writeln($e->getLine());
+                        exit("true");
+                    } else {
+                        die("low balance ex2 token2");
                     }
-                }
-            }
-
-            print_r($full_result);
-
-        } else {
-
-            try {
-
-                $first_result = $exchanges_array[$first_exchange]->mainFunction($user_name, $pair);
-                $second_result = $exchanges_array[$second_exchange]->mainFunction($user_name, $pair);
-
-                $result = array(
-                    "pair" => $pair,
-                    "first exchange" => $first_exchange,
-                    "second exchange" => $second_exchange,
-
-                );
-
-                if (is_numeric($first_result["bid"]) && is_numeric($second_result["bid"])) {
-                    $spreads = array(
-                        $first_exchange . " bid" => $first_result["bid"],
-                        $first_exchange . " ask" => $first_result["ask"],
-                        $second_exchange . " bid" => $second_result["bid"],
-                        $second_exchange . " ask" => $second_result["ask"],
-                        "bid diff" => $first_result["bid"] - $second_result["bid"],
-                        "ask diff" => $first_result["ask"] - $second_result["ask"],
-                        "bid  spread" => ($first_result["bid"] / $second_result["ask"] - 1) * 100,
-                        "ask spread" => ($first_result["ask"] / $second_result["bid"] - 1) * 100,
-                    );
-                    $result = array_merge($result, $spreads);
                 } else {
-                    $err = array(
-                        $first_exchange => $first_result["bid"],
-                        $second_exchange => $second_result["bid"],
-                    );
-                    $result = array_merge($result, $err);
+                    exit("balance = 0?");
                 }
-                print_r($result);
-            } catch (\Exception $e) {
-                $output->writeln($e->getMessage());
-                $output->writeln($e->getFile());
-                $output->writeln($e->getLine());
+            } else {
+                exit("invalid balance, u don't have money");
             }
+        } catch (\Exception $e) {
+            $err_arr = array(
+                $e->getMessage(),
+                $e->getLine(),
+                $e->getFile(),
+            );
+            print_r($err_arr);
+        }
+
+    }
+
+
+    public function getPercentRate($first_exchange, $second_exchange, $first_token, $second_token)
+    {
+        try {
+            $first_rate = $first_exchange->mainFunction("", $first_token . "/" . $second_token);
+            $second_rate = $second_exchange->mainFunction("", $first_token . "/" . $second_token);
+
+            return array(
+                "first rate" => $first_rate,
+                "second rate" => $second_rate,
+            );
+        } catch (\Exception $e) {
+            $err_arr = array(
+                $e->getMessage(),
+                $e->getLine(),
+                $e->getFile(),
+            );
+            print_r($err_arr);
         }
     }
+
+
 }

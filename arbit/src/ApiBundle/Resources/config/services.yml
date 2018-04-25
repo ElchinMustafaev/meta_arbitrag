@@ -53,3 +53,7 @@ services:
     api.trade:
         class: ApiBundle\Service\TradeHelper
         arguments: ["@service_container", "@doctrine.orm.entity_manager"]
+
+    api.main:
+        class: ApiBundle\Service\Main
+        arguments: ["@service_container", "@doctrine.orm.entity_manager"]
