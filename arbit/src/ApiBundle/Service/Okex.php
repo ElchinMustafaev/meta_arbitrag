@@ -34,18 +34,7 @@ class Okex
     )
     {
         try {
-            $db_record = $this
-                ->em
-                ->getRepository('ApiBundle:ApiKey')
-                ->findOneBy(array(
-                        "exchange" => "okex",
-                        "users" => $name,
-                    )
-                );
-
             $okex = new \ccxt\okex();
-            $okex->apiKey = $db_record->getKey();
-            $okex->secret = $db_record->getSecretKey();
 
             $bid = ($okex->fetch_ticker ($pair)['bid']);
             $ask = ($okex->fetch_ticker ($pair)['ask']);

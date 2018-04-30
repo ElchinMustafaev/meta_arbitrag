@@ -34,18 +34,8 @@ class Bithumb
     )
     {
         try {
-            $db_record = $this
-                ->em
-                ->getRepository('ApiBundle:ApiKey')
-                ->findOneBy(array(
-                        "exchange" => "bithumb",
-                        "users" => $name,
-                    )
-                );
 
             $bithumb = new \ccxt\bithumb();
-            $bithumb->apiKey = $db_record->getKey();
-            $bithumb->secret = $db_record->getSecretKey();
 
             $bid = ($bithumb->fetch_ticker ($pair)['bid']);
             $ask = ($bithumb->fetch_ticker ($pair)['ask']);

@@ -33,18 +33,7 @@ class Kraken
     )
     {
         try {
-            $db_record = $this
-                ->em
-                ->getRepository('ApiBundle:ApiKey')
-                ->findOneBy(array(
-                        "exchange" => "kraken",
-                        "users" => $name,
-                    )
-                );
-
             $kraken = new \ccxt\kraken();
-            $kraken->apiKey = $db_record->getKey();
-            $kraken->secret = $db_record->getSecretKey();
 
             $bid = ($kraken->fetch_ticker ($pair)['bid']);
             $ask = ($kraken->fetch_ticker ($pair)['ask']);

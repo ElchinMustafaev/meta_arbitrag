@@ -29,7 +29,7 @@ class OrdersCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         date_default_timezone_set("UTC");
-
+        $time = time();
         $first_exchange = $input->getOption("fe");
         $second_exchange = $input->getOption("se");
         $first_token = $input->getOption("ft");
@@ -38,6 +38,8 @@ class OrdersCommand extends ContainerAwareCommand
         $start_balance = $input->getOption("sb");
         $first_ex_bid = $input->getOption("feb");
         $second_ex_ask = $input->getOption("sea");
+
+
 
         $exchanges_array = array(
             "livecoin" => $this->getContainer()->get("api.livecoin"),
@@ -53,21 +55,53 @@ class OrdersCommand extends ContainerAwareCommand
             "bithumb" => $this->getContainer()->get("api.bithumb"),
         );
 
-        print_r($start_balance * $second_ex_ask);
-        echo "\n";
-        print_r($start_balance * $first_ex_bid);
-        echo "\n";
+
+        $first_order = $exchanges_array[$first_exchange]
+            ->takeOrder(
+                $user_name,
+                $first_token . "/" . $second_token,
+                $start_balance,
+                "sell",
+                $first_ex_bid
+            );
 
 
-        print_r(
-            $first_order = $exchanges_array[$first_exchange]
-                ->takeOrder($user_name, $first_token . "/" . $second_token, $start_balance, "sell", $first_ex_bid)
-        );
-        print_r(
-            $second_order = $exchanges_array[$second_exchange]
-                ->takeOrder($user_name, $first_token . "/" . $second_token, $start_balance, "buy", $second_ex_ask)
-        );
+        $second_order = $exchanges_array[$second_exchange]
+            ->takeOrder(
+                $user_name,
+                $first_token . "/" . $second_token,
+                $start_balance,
+                "buy",
+                $second_ex_ask
+            );
 
+        do {
+            sleep(1);
+            $first_status =
+                $exchanges_array[$first_exchange]
+                    ->getInfoByOrder(
+                        $user_name,
+                        $first_order,
+                        $first_token . "/" . $second_token,
+                        $time - 10800);
+        } while (($first_status != "closed") || (time() >= $time + 10800));
+
+        do {
+            sleep(1);
+            $second_status =
+                $exchanges_array[$second_exchange]
+                    ->getInfoByOrder(
+                        $user_name,
+                        $second_order,
+                        $first_token . "/" . $second_token,
+                        $time - 10800);
+        } while (($second_status != "closed") || (time() >= $time + 10800));
+
+        if ($first_status == "closed" && $second_status == "closed") {
+            exit("closed");
+        } else {
+            exit("error");
+        }
     }
 
 }

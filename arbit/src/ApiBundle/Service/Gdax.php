@@ -33,18 +33,7 @@ class Gdax
     )
     {
         try {
-            $db_record = $this
-                ->em
-                ->getRepository('ApiBundle:ApiKey')
-                ->findOneBy(array(
-                        "exchange" => "gdax",
-                        "users" => $name,
-                    )
-                );
-
             $gdax = new \ccxt\gdax();
-            $gdax->apiKey = $db_record->getKey();
-            $gdax->secret = $db_record->getSecretKey();
 
             $bid = ($gdax->fetch_ticker ($pair)['bid']);
             $ask = ($gdax->fetch_ticker ($pair)['ask']);

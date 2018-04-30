@@ -36,19 +36,9 @@ class Bitmex
     )
     {
         try {
-            $db_record = $this
-                ->em
-                ->getRepository('ApiBundle:ApiKey')
-                ->findOneBy(array(
-                        "exchange" => "bitmex",
-                        "users" => $name,
-                    )
-                );
 
             $bitmex = new \ccxt\bitmex();
-            $bitmex->apiKey = $db_record->getKey();
-            $bitmex->secret = $db_record->getSecretKey();
-            
+
             $bid = ($bitmex->fetch_ticker ($pair)['bid']);
             $ask = ($bitmex->fetch_ticker ($pair)['ask']);
 

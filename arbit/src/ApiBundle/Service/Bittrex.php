@@ -34,18 +34,7 @@ class Bittrex
     )
     {
         try {
-            $db_record = $this
-                ->em
-                ->getRepository('ApiBundle:ApiKey')
-                ->findOneBy(array(
-                        "exchange" => "bittrex",
-                        "users" => $name,
-                    )
-                );
-
             $bittrex = new \ccxt\bittrex();
-            $bittrex->apiKey = $db_record->getKey();
-            $bittrex->secret = $db_record->getSecretKey();
 
             $bid = ($bittrex->fetch_ticker ($pair)['bid']);
             $ask = ($bittrex->fetch_ticker ($pair)['ask']);

@@ -33,18 +33,8 @@ class Huobipro
     )
     {
         try {
-            $db_record = $this
-                ->em
-                ->getRepository('ApiBundle:ApiKey')
-                ->findOneBy(array(
-                        "exchange" => "huobipro",
-                        "users" => $name,
-                    )
-                );
 
             $huobipro = new \ccxt\huobipro();
-            $huobipro->apiKey = $db_record->getKey();
-            $huobipro->secret = $db_record->getSecretKey();
 
             $bid = ($huobipro->fetch_ticker ($pair)['bid']);
             $ask = ($huobipro->fetch_ticker ($pair)['ask']);

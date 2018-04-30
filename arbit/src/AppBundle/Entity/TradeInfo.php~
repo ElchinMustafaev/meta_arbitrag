@@ -438,28 +438,4 @@ class TradeInfo
     {
         return $this->secondStepAskStatus;
     }
-
-    /**
-     * Set status
-     *
-     * @param string $status
-     *
-     * @return TradeInfo
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * Get status
-     *
-     * @return string
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
 }

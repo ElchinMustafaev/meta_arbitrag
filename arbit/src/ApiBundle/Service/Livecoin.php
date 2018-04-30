@@ -28,7 +28,11 @@ class Livecoin
         $this->em = $em;
     }
 
-
+    /**
+     * @param $name
+     * @param $pair
+     * @return array
+     */
     public function mainFunction(
         $name,
         $pair
@@ -53,6 +57,12 @@ class Livecoin
 
     }
 
+    /**
+     * @param $name
+     * @param $first_token
+     * @param $second_token
+     * @return array
+     */
     public function getBalance($name, $first_token, $second_token)
     {
         $db_record = $this
@@ -77,16 +87,24 @@ class Livecoin
                 $second_token_balance = $value['value'];
             }
         }
-        if (!empty($first_token_balance) && !empty($second_token_balance)) {
+        if (!empty($first_token_balance) || !empty($second_token_balance)) {
             return array(
                 $first_token_balance,
                 $second_token_balance
             );
         } else {
-            die("there are not balance");
+            die("there are not balance on " . $this->getName() . "\n");
         }
     }
 
+    /**
+     * @param $name
+     * @param $pair
+     * @param $balance
+     * @param $side
+     * @param $price
+     * @return mixed
+     */
     public function takeOrder($name, $pair, $balance, $side, $price)
     {
         $db_record = $this
@@ -102,12 +120,56 @@ class Livecoin
         $livecoin->apiKey = $db_record->getKey();
         $livecoin->secret = $db_record->getSecretKey();
 
-        return $livecoin->create_order($pair, "limit", $side, $balance, $price);
+        $order = $livecoin->create_order($pair, "limit", $side, $balance, $price);
+        if (is_array($order)) {
+            return $order['info']['orderId'];
+        }
 
     }
 
+    /**
+     * @return float
+     */
+    public function getFeePercent()
+    {
+        return 1.02;
+    }
+
+    /**
+     * @return string
+     */
     public function getName()
     {
         return "livecoin";
     }
+
+    public function getInfoByOrder($name, $id, $pair = "", $time = "")
+    {
+        $db_record = $this
+            ->em
+            ->getRepository('ApiBundle:ApiKey')
+            ->findOneBy(array(
+                    "exchange" => "livecoin",
+                    "users" => $name,
+                )
+            );
+
+        $livecoin = new \ccxt\livecoin();
+        $livecoin->apiKey = $db_record->getKey();
+        $livecoin->secret = $db_record->getSecretKey();
+        $orders = $livecoin->fetchClosedOrders($pair, $time);
+        if (is_array($orders)) {
+            foreach ($orders as $key => $value) {
+                if ($value['info']['id'] = $id) {
+                    return "closed";
+                }
+            }
+            return "open";
+        } else {
+            return "error";
+        }
+
+    }
+
+
 }

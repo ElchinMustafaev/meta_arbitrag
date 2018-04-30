@@ -34,18 +34,7 @@ class Binance
     )
     {
         try {
-            $db_record = $this
-                ->em
-                ->getRepository('ApiBundle:ApiKey')
-                ->findOneBy(array(
-                        "exchange" => "binance",
-                        "users" => $name,
-                    )
-                );
-
             $binance = new \ccxt\binance();
-            $binance->apiKey = $db_record->getKey();
-            $binance->secret = $db_record->getSecretKey();
 
 
             $bid = ($binance->fetch_ticker ($pair)['bid']);

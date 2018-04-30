@@ -192,4 +192,28 @@ class History
     {
         return $this->revSpread;
     }
+
+    /**
+     * Set pair
+     *
+     * @param string $pair
+     *
+     * @return History
+     */
+    public function setPair($pair)
+    {
+        $this->pair = $pair;
+
+        return $this;
+    }
+
+    /**
+     * Get pair
+     *
+     * @return string
+     */
+    public function getPair()
+    {
+        return $this->pair;
+    }
 }

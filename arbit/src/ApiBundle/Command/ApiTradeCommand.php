@@ -21,6 +21,7 @@ class ApiTradeCommand extends ContainerAwareCommand
             ->addOption("ft", null, InputOption::VALUE_REQUIRED, "first token")
             ->addOption("st", null, InputOption::VALUE_REQUIRED, "second token")
             ->addOption("sb", null, InputOption::VALUE_REQUIRED, "start balance")
+            ->addOption("step", null, InputOption::VALUE_REQUIRED, "step")
         ;
     }
 
@@ -35,6 +36,7 @@ class ApiTradeCommand extends ContainerAwareCommand
             $second_token = $input->getOption("st");
             $user_name = $input->getOption("user_name");
             $start_balance = $input->getOption("sb");
+            $step = $input->getOption('step');
 
             $exchanges_array = array(
                 "livecoin" => $this->getContainer()->get("api.livecoin"),
@@ -50,10 +52,13 @@ class ApiTradeCommand extends ContainerAwareCommand
                 "bithumb" => $this->getContainer()->get("api.bithumb"),
             );
 
-
-            $first_exchange = $exchanges_array[$first_exchange];
-            $second_exchange = $exchanges_array[$second_exchange];
-
+            if ($step == 1) {
+                $first_exchange = $exchanges_array[$first_exchange];
+                $second_exchange = $exchanges_array[$second_exchange];
+            } else {
+                $first_exchange = $exchanges_array[$second_exchange];
+                $second_exchange = $exchanges_array[$first_exchange->getName()];
+            }
             $rate = $this->getPercentRate($first_exchange, $second_exchange, $first_token, $second_token);
             $first_balance = $first_exchange->getBalance($user_name, $first_token, $second_token);
             $first_ex_first_token_balance = $first_balance[0];
@@ -63,16 +68,16 @@ class ApiTradeCommand extends ContainerAwareCommand
             if ($start_balance <= $first_ex_first_token_balance) {
                 $second_balance = $second_exchange->getBalance($user_name, $first_token, $second_token);
                 $second_ex_first_token_balance = $second_balance[0];
-                $second_ex_second_token_balance = $second_balance[0];
+                $second_ex_second_token_balance = $second_balance[1];
 
 
                 if (!empty($first_ex_first_token_balance) && !empty($second_ex_second_token_balance))
                 {
-                    $second_ex_order_balance = $start_balance * $rate["first rate"]["bid"];
+                    $second_ex_order_balance =
+                        $start_balance * $rate["first rate"]["bid"] * $second_exchange->getFeePercent();
                     if ($second_ex_order_balance <= $second_ex_second_token_balance) {
 
-                        print_r($second_ex_order_balance . "\n");
-                        system(" php bin/console api:order " .
+                        $status = system(" php bin/console api:order " .
                             "--fe=" . $first_exchange->getName() .
                             " --se=" . $second_exchange->getName() . " --user_name=" . $user_name .
                             " --ft=" . $first_token . " --st=" . $second_token ." --sb=" . $start_balance .
@@ -80,15 +85,14 @@ class ApiTradeCommand extends ContainerAwareCommand
                             " --sea=" . $rate["second rate"]["ask"]
                         );
 
-                        exit("true");
                     } else {
-                        die("low balance ex2 token2");
+                        die("low balance ex2 token2\n");
                     }
                 } else {
-                    exit("balance = 0?");
+                    exit("balance = 0?\n");
                 }
             } else {
-                exit("invalid balance, u don't have money");
+                exit("invalid balance, u don't have money\n");
             }
         } catch (\Exception $e) {
             $err_arr = array(
