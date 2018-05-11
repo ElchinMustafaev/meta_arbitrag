@@ -22,6 +22,7 @@ class ApiTradeCommand extends ContainerAwareCommand
             ->addOption("st", null, InputOption::VALUE_REQUIRED, "second token")
             ->addOption("sb", null, InputOption::VALUE_REQUIRED, "start balance")
             ->addOption("step", null, InputOption::VALUE_REQUIRED, "step")
+            ->addOption("id", null, InputOption::VALUE_REQUIRED, "id in db")
         ;
     }
 
@@ -37,6 +38,14 @@ class ApiTradeCommand extends ContainerAwareCommand
             $user_name = $input->getOption("user_name");
             $start_balance = $input->getOption("sb");
             $step = $input->getOption('step');
+            $id = $input->getOption("id");
+
+            $record = $this
+                ->getContainer()
+                ->get("doctrine")
+                ->getRepository("AppBundle:TradeInfo")
+                ->find($id)
+            ;
 
             $exchanges_array = array(
                 "livecoin" => $this->getContainer()->get("api.livecoin"),
@@ -55,19 +64,20 @@ class ApiTradeCommand extends ContainerAwareCommand
             if ($step == 1) {
                 $first_exchange = $exchanges_array[$first_exchange];
                 $second_exchange = $exchanges_array[$second_exchange];
-            } else {
+            } elseif($step == 2) {
                 $first_exchange = $exchanges_array[$second_exchange];
                 $second_exchange = $exchanges_array[$first_exchange->getName()];
+            } else {
+                exit("error haven't step");
             }
+
             $rate = $this->getPercentRate($first_exchange, $second_exchange, $first_token, $second_token);
             $first_balance = $first_exchange->getBalance($user_name, $first_token, $second_token);
             $first_ex_first_token_balance = $first_balance[0];
-            $first_ex_second_token_balance = $first_balance[1];
 
 
             if ($start_balance <= $first_ex_first_token_balance) {
                 $second_balance = $second_exchange->getBalance($user_name, $first_token, $second_token);
-                $second_ex_first_token_balance = $second_balance[0];
                 $second_ex_second_token_balance = $second_balance[1];
 
 
@@ -85,6 +95,27 @@ class ApiTradeCommand extends ContainerAwareCommand
                             " --sea=" . $rate["second rate"]["ask"]
                         );
 
+                        if ($step == 1) {
+                            if ($status == "closed") {
+                                $record->setStatus(2);
+                                $record->setFirstStepBidStatus(true);
+                                $record->setFirstStepAskStatus(true);
+                            }
+                        } else {
+                            if ($status == "closed") {
+                                $record->setStatus(0);
+                                $record->setSecondStepBidStatus(true);
+                                $record->setSecondStepAskStatus(true);
+                            }
+                        }
+                        $em = $this
+                            ->getContainer()
+                            ->get("doctrine")
+                            ->getManager()
+                        ;
+                        $em->persist($record);
+                        $em->flush();
+                        die("end step\n");
                     } else {
                         die("low balance ex2 token2\n");
                     }

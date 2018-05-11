@@ -40,9 +40,9 @@ class Hitbtc
         try {
 
             $hitbtc = new \ccxt\hitbtc2();
-
-            $bid = ($hitbtc->fetch_ticker ($pair)['bid']);
-            $ask = ($hitbtc->fetch_ticker ($pair)['ask']);
+            $tickers = $hitbtc->fetch_ticker ($pair);
+            $bid = ($tickers['bid']);
+            $ask = ($tickers['ask']);
 
             return array(
                 "bid" => $bid,

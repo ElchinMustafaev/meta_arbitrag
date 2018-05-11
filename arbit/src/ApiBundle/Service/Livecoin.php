@@ -41,8 +41,9 @@ class Livecoin
         try {
             $livecoin = new \ccxt\livecoin();
 
-            $bid = ($livecoin->fetch_ticker ($pair)['bid']);
-            $ask = ($livecoin->fetch_ticker ($pair)['ask']);
+            $tikers = $livecoin->fetch_ticker ($pair);
+            $bid = ($tikers['bid']);
+            $ask = ($tikers['ask']);
 
             return array(
                 "bid" => $bid,

@@ -27,14 +27,17 @@ class DefaultController extends Controller
     public function mainTest()
     {
         $livecoin = $this->get("api.livecoin");
-        $cryptopia = $this->get("api.hitbtc");
+        $hitbtc = $this->get("api.hitbtc");
         $first_token = "DOGE";
         $second_token = "BTC";
         $start_balance = "100";
         $id = "5266941001";
         $name = "test";
+        $trade_helper = $this->get("api.trade");
 
-        print_r($cryptopia->getInfoByOrder($name, $id, $first_token . "/" . $second_token, time() - 10800));
+        //print_r($trade_helper->analyse("livecoin", "hitbtc", "DOGE/BTC", "test"));
+        print_r($livecoin->getBalance($name, $first_token, $second_token));
+        print_r($hitbtc->getBalance($name, $first_token, $second_token));
         return new JsonResponse();
     }
 

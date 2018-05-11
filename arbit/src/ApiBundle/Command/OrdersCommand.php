@@ -74,7 +74,10 @@ class OrdersCommand extends ContainerAwareCommand
                 "buy",
                 $second_ex_ask
             );
-
+        print_r($first_order);
+        echo "\n";
+        print_r($second_order);
+        echo "\n";
         do {
             sleep(1);
             $first_status =
@@ -84,10 +87,7 @@ class OrdersCommand extends ContainerAwareCommand
                         $first_order,
                         $first_token . "/" . $second_token,
                         $time - 10800);
-        } while (($first_status != "closed") || (time() >= $time + 10800));
 
-        do {
-            sleep(1);
             $second_status =
                 $exchanges_array[$second_exchange]
                     ->getInfoByOrder(
@@ -95,12 +95,13 @@ class OrdersCommand extends ContainerAwareCommand
                         $second_order,
                         $first_token . "/" . $second_token,
                         $time - 10800);
-        } while (($second_status != "closed") || (time() >= $time + 10800));
+        } while ((($first_status != "closed") || (time() >= $time + 10800)) && (($second_status != "closed") || (time() >= $time + 10800)));
+
 
         if ($first_status == "closed" && $second_status == "closed") {
-            exit("closed");
+            exit("closed\n");
         } else {
-            exit("error");
+            exit("error\n");
         }
     }
 

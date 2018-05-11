@@ -38,6 +38,13 @@ class TradeInfo
     /**
      * @var float
      *
+     * @ORM\Column(name="target_rev_spread", type="float", nullable=true)
+     */
+    private $targetRevSpread;
+
+    /**
+     * @var float
+     *
      * @ORM\Column(name="take_profit", type="float")
      */
     private $takeProfit;
@@ -461,5 +468,29 @@ class TradeInfo
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Set targetRevSpread
+     *
+     * @param float $targetRevSpread
+     *
+     * @return TradeInfo
+     */
+    public function setTargetRevSpread($targetRevSpread)
+    {
+        $this->targetRevSpread = $targetRevSpread;
+
+        return $this;
+    }
+
+    /**
+     * Get targetRevSpread
+     *
+     * @return float
+     */
+    public function getTargetRevSpread()
+    {
+        return $this->targetRevSpread;
     }
 }

@@ -39,22 +39,22 @@ class TradeHelper
     {
         try {
             $exchanges_array = array(
-                "livecoin" => $this->contailer->get("api.livecoin"),
-                "bitmex" => $this->contailer->get("api.bitmex"),
-                "binance" => $this->contailer->get("api.binance"),
-                "cryptopia" => $this->contailer->get("api.cryptopia"),
-                "gdax" => $this->contailer->get("api.gdax"),
-                "hitbtc" => $this->contailer->get("api.hitbtc"),
-                "huobipro" => $this->contailer->get("api.huobipro"),
-                "kraken" => $this->contailer->get("api.kraken"),
-                "okex" => $this->contailer->get("api.okex"),
-                "bittrex" => $this->contailer->get("api.bittrex"),
-                "bithumb" => $this->contailer->get("api.bithumb"),
+                "livecoin" => $this->container->get("api.livecoin"),
+                "bitmex" => $this->container->get("api.bitmex"),
+                "binance" => $this->container->get("api.binance"),
+                "cryptopia" => $this->container->get("api.cryptopia"),
+                "gdax" => $this->container->get("api.gdax"),
+                "hitbtc" => $this->container->get("api.hitbtc"),
+                "huobipro" => $this->container->get("api.huobipro"),
+                "kraken" => $this->container->get("api.kraken"),
+                "okex" => $this->container->get("api.okex"),
+                "bittrex" => $this->container->get("api.bittrex"),
+                "bithumb" => $this->container->get("api.bithumb"),
             );
 
             $info_e1 = $exchanges_array[$exchange1]->mainFunction($user_name, $pair);
             $info_e2 = $exchanges_array[$exchange2]->mainFunction($user_name, $pair);
-
+            unset($exchanges_array);
             if (is_numeric($info_e1["bid"]) && is_numeric($info_e2["bid"])) {
                 $spreads = array(
                     $exchange1 . " bid" => $info_e1["bid"],
