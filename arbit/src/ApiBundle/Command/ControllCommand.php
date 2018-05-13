@@ -43,39 +43,37 @@ class ControllCommand extends ContainerAwareCommand
         $query = $qb->getQuery();
         $result = $query->getResult();
         print_r($result);
-        if ($result[0]["status"] != 0) {
 
-            $info = $trade_helper
-                ->analyse(
-                    $result[0]["firstExchange"],
-                    $result[0]["secondExchange"],
-                    $result[0]["firstCoin"] . "/" . $result[0]["secondCoin"],
-                    $result[0]["userName"]
-                );
+        foreach ($result as $value) {
+            if ($value["status"] != 0) {
 
-            print_r($info);
-            $this->runSystem($result, $info);
+                $info = $trade_helper
+                    ->analyse(
+                        $value["firstExchange"],
+                        $value["secondExchange"],
+                        $value["firstCoin"] . "/" . $value["secondCoin"],
+                        $value["userName"]
+                    );
 
-            $result = $query->getResult();
-            print_r(memory_get_usage(true));
-            echo "\n";
-            print_r($result);
-        } else {
-            system("pm2 stop bot.sh");
+                print_r($value["firstCoin"] . "/" . $value["secondCoin"]);
+                echo ("\n");
+                print_r($info);
+                $this->runSystem($value, $info);
+            }
         }
 
     }
 
-    public function runSystem(array $result, array $info)
+    public function runSystem(array $value, array $info)
     {
-        if ((($result[0]["status"] == 1) && ($info["spread"] >= $result[0]["targetPercent"])) ||
-            (($result[0]["status"] == 2) && ($info["rev spread"] <= $result[0]["targetRevSpread"]))) {
+        if ((($value["status"] == 1) && ($info["spread"] >= $value["targetPercent"])) ||
+            (($value["status"] == 2) && ($info["rev spread"] <= $value["targetRevSpread"]))) {
             system("php bin/console api:trade " .
-                "--fe=" . $result[0]["firstExchange"] . " --se=" . $result[0]["secondExchange"] .
-                " --user_name=" . $result[0]["userName"] .
-                " --ft=" . $result[0]["firstCoin"] . " --st=" . $result[0]["secondCoin"] .
-                " --sb=" . $result[0]["startBalance"] . " --step=" . $result[0]["status"] . " --id=" .
-                $result[0]["id"]
+                "--fe=" . $value["firstExchange"] . " --se=" . $value["secondExchange"] .
+                " --user_name=" . $value["userName"] .
+                " --ft=" . $value["firstCoin"] . " --st=" . $value["secondCoin"] .
+                " --sb=" . $value["startBalance"] . " --step=" . $value["status"] . " --id=" .
+                $value["id"]
             );
         }
     }
