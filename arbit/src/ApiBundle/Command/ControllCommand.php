@@ -21,45 +21,47 @@ class ControllCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        //ini_set('memory_limit', '-1');
-        set_time_limit(-1);
-        $trade_helper = $this->getContainer()->get("api.trade");
-        $em = $this
-            ->getContainer()
-            ->get("doctrine")
-            ->getManager()
-        ;
+        try {
+            //ini_set('memory_limit', '-1');
+            set_time_limit(-1);
+            $trade_helper = $this->getContainer()->get("api.trade");
+            $em = $this
+                ->getContainer()
+                ->get("doctrine")
+                ->getManager();
 
-        $qb = $em
-            ->createQueryBuilder('t');
-        $qb->select(
+            $qb = $em
+                ->createQueryBuilder('t');
+            $qb->select(
                 "t.status, t.stopLose, t.takeProfit, t.startBalance,
                  t.targetPercent, t.userName, t.firstExchange, t.secondExchange, t.firstCoin, t.secondCoin, 
                  t.firstStepBidStatus, t.firstStepAskStatus, t.secondStepBidStatus, t.secondStepAskStatus, 
                  t.id, t.targetRevSpread"
             )
-            ->from("AppBundle:TradeInfo", "t")
-        ;
-        $query = $qb->getQuery();
-        $result = $query->getResult();
-        print_r($result);
+                ->from("AppBundle:TradeInfo", "t");
+            $query = $qb->getQuery();
+            $result = $query->getResult();
+            print_r($result);
 
-        foreach ($result as $value) {
-            if ($value["status"] != 0) {
+            foreach ($result as $value) {
+                if ($value["status"] != 0) {
 
-                $info = $trade_helper
-                    ->analyse(
-                        $value["firstExchange"],
-                        $value["secondExchange"],
-                        $value["firstCoin"] . "/" . $value["secondCoin"],
-                        $value["userName"]
-                    );
+                    $info = $trade_helper
+                        ->analyse(
+                            $value["firstExchange"],
+                            $value["secondExchange"],
+                            $value["firstCoin"] . "/" . $value["secondCoin"],
+                            $value["userName"]
+                        );
 
-                print_r($value["firstCoin"] . "/" . $value["secondCoin"]);
-                echo ("\n");
-                print_r($info);
-                $this->runSystem($value, $info);
+                    print_r($value["firstCoin"] . "/" . $value["secondCoin"]);
+                    echo("\n");
+                    print_r($info);
+                    $this->runSystem($value, $info);
+                }
             }
+        } catch (\Exception $e) {
+            exit ($e->getMessage());
         }
 
     }
