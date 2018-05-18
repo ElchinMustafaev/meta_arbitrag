@@ -2,6 +2,7 @@
 
 namespace ApiBundle\Controller;
 
+use AppBundle\Entity\TradeInfo;
 use ccxt\binance;
 use ccxt\bittrex;
 use ccxt\hitbtc;
@@ -9,6 +10,7 @@ use ccxt\hitbtc2;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
@@ -77,5 +79,53 @@ class DefaultController extends Controller
         $hitbtc = $this->get("api.hitbtc");
         print_r($hitbtc->getBalance("test"));
         return new JsonResponse();
+    }
+
+    /**
+     * @Route("add-record")
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function addTask(Request $request)
+    {
+        try {
+            $stopLose = $request->get("sl");
+            $takeProfit = $request->get("tpr");
+            $startBalance = $request->get("sb");
+            $targetPercent = $request->get("tp");
+            $userName = $request->get("user");
+            $firstCoin = $request->get("fc");
+            $secondCoin = $request->get("sc");
+            $firstExchange = $request->get("fe");
+            $secondExchange = $request->get("se");
+
+            $record = new TradeInfo();
+
+            $record->setStatus(1);
+            $record->setStopLose($stopLose);
+            $record->setStartBalance($startBalance);
+            $record->setFirstCoin($firstCoin);
+            $record->setSecondCoin($secondCoin);
+            $record->setFirstExchange($firstExchange);
+            $record->setSecondExchange($secondExchange);
+            $record->setStartBalance($startBalance);
+            $record->setTakeProfit($takeProfit);
+            $record->setUserName($userName);
+            $record->setTargetPercent($targetPercent);
+            $record->setTargetRevSpread($targetPercent - $takeProfit);
+            $record->setFirstStepAskStatus(false);
+            $record->setFirstStepBidStatus(false);
+            $record->setSecondStepAskStatus(false);
+            $record->setSecondStepBidStatus(false);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($record);
+            $em->flush();
+            return new JsonResponse("true");
+        } catch (\Exception $e) {
+            return new JsonResponse($e->getMessage());
+        }
     }
 }
